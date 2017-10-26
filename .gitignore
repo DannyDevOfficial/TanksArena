@@ -73,3 +73,6 @@
 
 # Cache files for the editor to use
 */DerivedDataCache/*
+
+#Ignore my assets
+Assets/*
