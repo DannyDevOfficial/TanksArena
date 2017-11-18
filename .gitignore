@@ -76,3 +76,5 @@
 
 #Ignore my assets
 Assets/*
+TanksArena/Content/StarterContent/
+TanksArena/Content/Textures/
