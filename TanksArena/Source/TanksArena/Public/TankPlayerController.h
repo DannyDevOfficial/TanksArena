@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "Tank.h"
+
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
@@ -15,6 +17,7 @@ class TANKSARENA_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 	
-	
-	
+public:
+	// Get the tank that's controlled by the player
+	ATank* GetControlledTank() const;
 };
