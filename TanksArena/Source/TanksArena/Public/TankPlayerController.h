@@ -16,8 +16,10 @@ class TANKSARENA_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
-	
 public:
+	// Called once at the start
+	virtual void BeginPlay() override;
+
 	// Get the tank that's controlled by the player
 	ATank* GetControlledTank() const;
 };
