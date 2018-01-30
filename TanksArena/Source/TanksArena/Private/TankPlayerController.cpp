@@ -4,6 +4,7 @@
 
 #include "Tank.h"
 #include "GameFramework/Pawn.h"
+#include "Classes/Engine/World.h"
 
 void ATankPlayerController::BeginPlay() {
 	// Execute what's in the parent class
@@ -39,8 +40,15 @@ void ATankPlayerController::AimAtCrosshair() {
 	if (!GetControlledTank())
 		return;
 
-	// Get the point hit in the world by using
-	// a raycasting
-		// If anything was hit
-			// Aim the barrel at that point in the world
+	// Will store location in the world hit by the
+	// crosshair
+	FVector hitLocation;
+	// If anything was hit
+	if (GetSightRayHitLocation(hitLocation)) {
+		// Aim the barrel at that point in the world
+	}
+}
+
+bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocationOUT) const {
+	return false;
 }

@@ -24,10 +24,15 @@ private:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	// Get the tank that's controlled by the player
+	// Gets the tank that's controlled by the player
 	ATank* GetControlledTank() const;
 
-	// Make the tank move the barrel towards the point
+	// Makes the tank move the barrel towards the point
 	// where the crosshair intersects the world
 	void AimAtCrosshair();
+
+	// Gets location in the world where the crosshair is intersecting
+	// a point in the world and stores it in the passed in vector.
+	// Returns whether or not a part of the map was hit.
+	bool GetSightRayHitLocation(FVector& HitLocationOUT) const;
 };
