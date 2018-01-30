@@ -44,7 +44,7 @@ private:
 	* @param Vector that will contain the point hit in the world.
 	* @return Whether or not a part of the map was hit.
 	*/
-	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+	bool GetSightRayHitLocation(FVector& outHitLocation) const;
 
 private:
 	UPROPERTY(EditAnywhere)
@@ -54,4 +54,7 @@ private:
 	UPROPERTY(EditAnywhere)
 		float _crossHairYLocation = 0.33333f;	// Location of the crosshair on the viewport vertically,
 												// meaning it's a third of the way down the viewport
+
+	UPROPERTY(EditAnywhere)
+		float _lineTraceMaxRange = 10000.0f;	// The max range for the line trace
 };

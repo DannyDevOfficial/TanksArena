@@ -5,6 +5,7 @@
 #include "Tank.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
+#include "Camera/PlayerCameraManager.h"
 
 void ATankPlayerController::BeginPlay() {
 	// Execute what's in the parent class
@@ -45,11 +46,12 @@ void ATankPlayerController::AimAtCrosshair() {
 	FVector hitLocation;
 	// If anything was hit
 	if (GetSightRayHitLocation(hitLocation)) {
+		UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *hitLocation.ToString());
 		// Aim the barrel at that point in the world
 	}
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const {
+bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const {
 	// Will hold viewport size
 	int32 viewportXsize;
 	int32 viewportYsize;
@@ -74,8 +76,20 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	if (!wasAbleToDetermineValue) {
 		UE_LOG(LogTemp, Error, TEXT("Unable to determine crosshair 3D location"));
 	} else {
-		UE_LOG(LogTemp, Warning, TEXT("Crosshair 3D position: %s"),
-			*crossHairWorldDirection.ToString());
+		FHitResult hitResult;
+		FVector startLocation = PlayerCameraManager->GetCameraLocation();
+		FVector endLocation = startLocation + (crossHairWorldDirection * _lineTraceMaxRange);
+		// Line trace along the crosshair direction and determine what was hit in the world
+		if (GetWorld()->LineTraceSingleByChannel(hitResult,
+			startLocation,
+			endLocation,
+			ECollisionChannel::ECC_Visibility)) {
+			// Set the hitLocation
+			outHitLocation = hitResult.Location;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	return false;
