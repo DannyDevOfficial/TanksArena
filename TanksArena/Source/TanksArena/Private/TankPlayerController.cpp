@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+
+#include "Tank.h"
 #include "GameFramework/Pawn.h"
 
 void ATankPlayerController::BeginPlay() {
 	// Execute what's in the parent class
 	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("BeginPlay called"));
 
 	// Log to console only if there is a valid pointer
 	ATank* posessedTank = GetControlledTank();

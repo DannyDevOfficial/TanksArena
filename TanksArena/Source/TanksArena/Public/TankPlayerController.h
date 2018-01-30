@@ -2,21 +2,21 @@
 
 #pragma once
 
-#include "Tank.h"
+class ATank;
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
 /**
- * 
+ * Controls the tank used by the player
  */
 UCLASS()
 class TANKSARENA_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
-public:
+private:
 	// Called once at the start
 	virtual void BeginPlay() override;
 
