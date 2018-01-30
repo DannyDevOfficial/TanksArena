@@ -4,7 +4,7 @@
 
 #include "Tank.h"
 #include "GameFramework/Pawn.h"
-#include "Classes/Engine/World.h"
+#include "Engine/World.h"
 
 void ATankPlayerController::BeginPlay() {
 	// Execute what's in the parent class
@@ -60,6 +60,23 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector2D crosshairScreenLocation =
 		FVector2D(viewportXsize * _crossHairXLocation,
 			viewportYsize * _crossHairYLocation);
+
+	// Deproject crosshair screen position to a world 3D position
+	FVector cameraWorldLocation;
+	FVector crossHairWorldDirection;
+	bool wasAbleToDetermineValue =
+		DeprojectScreenPositionToWorld(crosshairScreenLocation.X,
+		crosshairScreenLocation.Y,
+		cameraWorldLocation,
+		crossHairWorldDirection);
+
+	// Log an error if it was unable to determine the value of the crosshair direction in 3D space
+	if (!wasAbleToDetermineValue) {
+		UE_LOG(LogTemp, Error, TEXT("Unable to determine crosshair 3D location"));
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("Crosshair 3D position: %s"),
+			*crossHairWorldDirection.ToString());
+	}
 
 	return false;
 }
