@@ -16,14 +16,22 @@ class TANKSARENA_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 
-private:
-	// Runs once at the start
+protected:
+	/**
+	* Called once at the start
+	*/
 	virtual void BeginPlay() override;
 
 private:
-	// Gets the tank being controlled by this controller
+	/**
+	* Gets the tank that's controlled by the AI
+	* @return Tank controlled by the AI
+	*/
 	ATank* GetControlledAITank() const;
 
-	// Searches the world for a player controller
+	/**
+	* Searches for the tank controlled by the player
+	* @return Tank controlled by the player
+	*/
 	ATank* FindPlayerController() const;
 };
