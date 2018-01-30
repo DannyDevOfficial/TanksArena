@@ -19,6 +19,14 @@ void ATankPlayerController::BeginPlay() {
 	}
 }
 
+void ATankPlayerController::Tick(float DeltaTime) {
+	// Call the parent's function
+	Super::Tick(DeltaTime);
+
+	// Aim the barrel at the crosshair
+	AimAtCrosshair();
+}
+
 
 ATank* ATankPlayerController::GetControlledTank() const {
 	// Cast the pawn component to a tank component since we know
@@ -26,3 +34,13 @@ ATank* ATankPlayerController::GetControlledTank() const {
 	return Cast<ATank>(GetPawn());
 }
 
+void ATankPlayerController::AimAtCrosshair() {
+	// Get out of here if there's no player controller
+	if (!GetControlledTank())
+		return;
+
+	// Get the point hit in the world by using
+	// a raycasting
+		// If anything was hit
+			// Aim the barrel at that point in the world
+}

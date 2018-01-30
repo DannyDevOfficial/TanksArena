@@ -20,6 +20,7 @@ private:
 	// Runs once at the start
 	virtual void BeginPlay() override;
 
+private:
 	// Gets the tank being controlled by this controller
 	ATank* GetControlledAITank() const;
 
