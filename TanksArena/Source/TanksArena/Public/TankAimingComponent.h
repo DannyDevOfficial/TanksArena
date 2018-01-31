@@ -24,6 +24,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
-	
+public:
+	/** Takes care of aiming at a given position in the world.
+	* @param Vector containing the world location to aim at
+	*/
+	void AimAt(FVector hitWorldLocation) const;
 };

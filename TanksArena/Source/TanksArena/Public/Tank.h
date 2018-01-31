@@ -2,6 +2,8 @@
 
 #pragma once
 
+class UTankAimingComponent;
+
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
@@ -31,4 +33,8 @@ public:
 	* @param Vector used to set the aim
 	*/
 	void AimAt(FVector hitPosition) const;
+
+private:
+	UTankAimingComponent* _tankAimingComponent = nullptr;	// Reference to the tank aiming component
+															// needed to delegate tasks to
 };
