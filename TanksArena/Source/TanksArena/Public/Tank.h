@@ -3,6 +3,7 @@
 #pragma once
 
 class UTankAimingComponent;
+class UTankBarrel;
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -38,7 +39,7 @@ public:
 	* @param UStaticMeshComponent representing the barrel to set
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void SetBarrel(UStaticMeshComponent* barrel) const;
+		void SetBarrel(UTankBarrel* barrel) const;
 
 private:
 	UTankAimingComponent* _tankAimingComponent = nullptr;	// Reference to the tank aiming component

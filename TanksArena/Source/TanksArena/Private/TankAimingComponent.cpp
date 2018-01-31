@@ -6,6 +6,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "TankBarrel.h"
+
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -63,7 +65,7 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) co
 	}
 }
 
-void UTankAimingComponent::SetBarrel(UStaticMeshComponent* barrel) {
+void UTankAimingComponent::SetBarrel(UTankBarrel* barrel) {
 	// Get out if there it's null
 	if (!barrel)
 		return;
@@ -80,4 +82,7 @@ void UTankAimingComponent::MoveBarrel(FVector aimDirection) const {
 	// Get the difference between aim direction rotation and barrel rotation
 	// and this will be how much to rotate the barrel this frame
 	FRotator deltaRotator = aimDirectionAsRotation - barrelRotation;
+
+	// Move barrel
+	_barrel->Elevate(5.0f);
 }

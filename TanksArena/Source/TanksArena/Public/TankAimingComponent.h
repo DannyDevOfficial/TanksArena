@@ -2,6 +2,8 @@
 
 #pragma once
 
+class UTankBarrel;
+
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
@@ -34,7 +36,7 @@ public:
 	/** Setter for the barrel static mesh
 	* @param UStaticMeshComponent representing the barrel to set
 	*/
-	void SetBarrel(UStaticMeshComponent* barrel);
+	void SetBarrel(UTankBarrel* barrel);
 
 private:
 	/** Calculates barrel rotation and moves it based on that
@@ -43,7 +45,7 @@ private:
 	void MoveBarrel(FVector aimDirection) const;
 
 private:
-	UStaticMeshComponent* _barrel = nullptr;					// Reference to the barrel static mesh
+	UTankBarrel* _barrel = nullptr;					// Reference to the barrel static mesh
 
 private:
 	const FName PROJECTILE_SPAWN_SOCKET = "Projectile Spawn";	// name that was given to the socket where the projectiles will spawn from
