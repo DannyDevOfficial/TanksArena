@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
 
 
 // Sets default values for this component's properties
@@ -36,7 +37,17 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector hitWorldLocation) const {
 	// Log what we're aiming at
-	UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"),
+	UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s from %s"),
 		*GetOwner()->GetName(),
-		*hitWorldLocation.ToString());
+		*hitWorldLocation.ToString(),
+		*_barrel->GetComponentLocation().ToString());
+}
+
+void UTankAimingComponent::SetBarrel(UStaticMeshComponent* barrel) {
+	// Get out if there it's null
+	if (!barrel)
+		return;
+
+	// Set the barrel
+	_barrel = barrel;
 }

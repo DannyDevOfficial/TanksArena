@@ -29,4 +29,12 @@ public:
 	* @param Vector containing the world location to aim at
 	*/
 	void AimAt(FVector hitWorldLocation) const;
+
+	/** Setter for the barrel static mesh
+	* @param UStaticMeshComponent representing the barrel to set
+	*/
+	void SetBarrel(UStaticMeshComponent* barrel);
+
+private:
+	UStaticMeshComponent* _barrel = nullptr;	// Reference to the barrel static mesh
 };

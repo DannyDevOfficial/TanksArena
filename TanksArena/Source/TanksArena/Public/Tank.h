@@ -34,6 +34,12 @@ public:
 	*/
 	void AimAt(FVector hitPosition) const;
 
+	/** Setter for the barrel static mesh
+	* @param UStaticMeshComponent representing the barrel to set
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void SetBarrel(UStaticMeshComponent* barrel) const;
+
 private:
 	UTankAimingComponent* _tankAimingComponent = nullptr;	// Reference to the tank aiming component
 															// needed to delegate tasks to

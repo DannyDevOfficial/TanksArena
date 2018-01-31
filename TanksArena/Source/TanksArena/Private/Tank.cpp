@@ -41,3 +41,8 @@ void ATank::AimAt(FVector hitPosition) const {
 	_tankAimingComponent->AimAt(hitPosition);
 }
 
+void ATank::SetBarrel(UStaticMeshComponent* barrel) const {
+	// Delegate it to the aiming component
+	_tankAimingComponent->SetBarrel(barrel);
+}
+
