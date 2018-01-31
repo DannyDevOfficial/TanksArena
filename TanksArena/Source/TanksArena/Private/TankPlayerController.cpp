@@ -37,7 +37,8 @@ void ATankPlayerController::AimAtCrosshair() {
 	FVector hitLocation;
 	// If anything was hit
 	if (GetSightRayHitLocation(hitLocation)) {
-		//UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *hitLocation.ToString());
+		// Aim at location
+		GetControlledTank()->AimAt(hitLocation);
 		// Aim the barrel at that point in the world
 	}
 }

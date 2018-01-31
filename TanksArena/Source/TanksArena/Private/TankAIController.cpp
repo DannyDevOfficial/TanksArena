@@ -10,24 +10,19 @@
 void ATankAIController::BeginPlay() {
 	// Call parent implementation
 	Super::BeginPlay();
+}
 
-	//// Log to console only if there is a valid pointer
-	//ATank* posessedAITank = GetControlledAITank();
-	//if (posessedAITank) {
-	//	UE_LOG(LogTemp, Warning, TEXT("Posessed Tank: %s"), *posessedAITank->GetName());
-	//} else {
-	//	UE_LOG(LogTemp, Error, TEXT("There is no posessed AI tank!"));
-	//}
+void ATankAIController::Tick(float DeltaTime) {
+	// Call parent implementation
+	Super::Tick(DeltaTime);
 
-	// Log to console the found PlayerController
-	// or an error message if there is no PlayerController
-	ATank* playerController = FindPlayerController();
-	if (playerController) {
-		UE_LOG(LogTemp, Warning, TEXT("Found PlayerController: %s"),
-			*playerController->GetName());
-	} else {
-		UE_LOG(LogTemp, Error, TEXT("PlayerController not found!"));
-	}
+	// Get out if there is no controlled tank
+	if (!GetControlledAITank())
+		return;
+
+	// Find the controlled tank and with it
+	// aim at the player location
+	GetControlledAITank()->AimAt(FindPlayerController()->GetTargetLocation());
 }
 
 ATank* ATankAIController::GetControlledAITank() const {

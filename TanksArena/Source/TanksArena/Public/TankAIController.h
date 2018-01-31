@@ -22,6 +22,11 @@ protected:
 	*/
 	virtual void BeginPlay() override;
 
+	/** Called every frame
+	* @param Time it took the last frame to complete
+	*/
+	virtual void Tick(float DeltaTime) override;
+
 private:
 	/**
 	* Gets the tank that's controlled by the AI

@@ -26,6 +26,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
-	
+public:
+	/** Aim at the location that was passed in
+	* @param Vector used to set the aim
+	*/
+	void AimAt(FVector hitPosition) const;
 };
