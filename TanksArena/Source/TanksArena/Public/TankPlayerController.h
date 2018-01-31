@@ -46,6 +46,28 @@ private:
 	*/
 	bool GetSightRayHitLocation(FVector& outHitLocation) const;
 
+	/** Calculates the viewport size and from that it gets the crosshair position on the screen.
+	* @param Vector that will contain the crosshair location on the screen.
+	*/
+	void GetCrosshairScreenLocation(FVector2D& outCrosshairScreenPosition) const;
+
+	/** Deprojects the crosshair screen position to a world position.
+	* @param Vector that will contain the crosshair location on the screen.
+	* @param Vector that will contain the crosshair direction in the world.
+	* @return True if it was able to determine a world position.
+	*/
+	bool DeprojectCrosshairScreenPositionToWorld(FVector2D crosshairScreenPosition,
+		FVector& outCrosshairWorldDirection) const;
+
+	/** Traces a line along the crosshair direction and determines if anything
+	* was hit in a max range.
+	* @param Vector that will contain the crosshair direction in the world.
+	* @param Vector that will contain the location in the world of the hit object.
+	* @return True if an object was hit.
+	*/
+	bool LineTraceAlongCrosshairDirectionForHit(FVector crosshairWorldDir,
+		FVector& outHitPosition) const;
+
 private:
 	UPROPERTY(EditAnywhere)
 		float _crossHairXLocation = 0.5f;		// Location of the crosshair on the viewport horizontally,

@@ -10,15 +10,6 @@
 void ATankPlayerController::BeginPlay() {
 	// Execute what's in the parent class
 	Super::BeginPlay();
-
-	// Log to console only if there is a valid pointer
-	ATank* posessedTank = GetControlledTank();
-	if (posessedTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Posessed Tank: %s"), *posessedTank->GetName());
-	}
-	else {
-		UE_LOG(LogTemp, Error, TEXT("There is no posessed tank!"));
-	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {
@@ -46,12 +37,32 @@ void ATankPlayerController::AimAtCrosshair() {
 	FVector hitLocation;
 	// If anything was hit
 	if (GetSightRayHitLocation(hitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *hitLocation.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *hitLocation.ToString());
 		// Aim the barrel at that point in the world
 	}
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const {
+	// Find the location of the crosshair on the screen
+	FVector2D crosshairScreenLocation;
+	GetCrosshairScreenLocation(crosshairScreenLocation);
+
+	// Deproject crosshair screen position to world direction
+	FVector crosshairWorldDirection;
+
+	if (!DeprojectCrosshairScreenPositionToWorld(crosshairScreenLocation,
+		crosshairWorldDirection)) {
+		UE_LOG(LogTemp, Error, TEXT("Unable to determine crosshair 3D location"));
+	} else {
+		return LineTraceAlongCrosshairDirectionForHit(crosshairWorldDirection,
+			outHitLocation);
+	}
+
+	// We should never get here
+	return false;
+}
+
+void ATankPlayerController::GetCrosshairScreenLocation(FVector2D& outCrosshairScreenPosition) const {
 	// Will hold viewport size
 	int32 viewportXsize;
 	int32 viewportYsize;
@@ -59,38 +70,36 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) cons
 	GetViewportSize(viewportXsize, viewportYsize);
 
 	// Will hold crosshair screen location
-	FVector2D crosshairScreenLocation =
+	outCrosshairScreenPosition =
 		FVector2D(viewportXsize * _crossHairXLocation,
 			viewportYsize * _crossHairYLocation);
+}
 
+bool ATankPlayerController::DeprojectCrosshairScreenPositionToWorld(FVector2D crosshairScreenPosition,
+	FVector& outCrosshairWorldDirection) const {
 	// Deproject crosshair screen position to a world 3D position
 	FVector cameraWorldLocation;
-	FVector crossHairWorldDirection;
-	bool wasAbleToDetermineValue =
-		DeprojectScreenPositionToWorld(crosshairScreenLocation.X,
-		crosshairScreenLocation.Y,
+	return DeprojectScreenPositionToWorld(crosshairScreenPosition.X, 
+		crosshairScreenPosition.Y,
 		cameraWorldLocation,
-		crossHairWorldDirection);
+		outCrosshairWorldDirection);
+}
 
-	// Log an error if it was unable to determine the value of the crosshair direction in 3D space
-	if (!wasAbleToDetermineValue) {
-		UE_LOG(LogTemp, Error, TEXT("Unable to determine crosshair 3D location"));
-	} else {
-		FHitResult hitResult;
-		FVector startLocation = PlayerCameraManager->GetCameraLocation();
-		FVector endLocation = startLocation + (crossHairWorldDirection * _lineTraceMaxRange);
-		// Line trace along the crosshair direction and determine what was hit in the world
-		if (GetWorld()->LineTraceSingleByChannel(hitResult,
-			startLocation,
-			endLocation,
-			ECollisionChannel::ECC_Visibility)) {
-			// Set the hitLocation
-			outHitLocation = hitResult.Location;
-			return true;
-		} else {
-			return false;
-		}
-	}
+bool ATankPlayerController::LineTraceAlongCrosshairDirectionForHit(FVector crosshairWorldDir,
+	FVector& outHitPosition) const {
+	// Store the necessary info
+	FHitResult hitResult;
+	FVector startLocation = PlayerCameraManager->GetCameraLocation();
+	FVector endLocation = startLocation + (crosshairWorldDir * _lineTraceMaxRange);
+	
+	// Line trace along the crosshair direction and determine what was hit in the world
+	// and set the hit location accordingly
+	bool objectHit = GetWorld()->LineTraceSingleByChannel(hitResult,
+		startLocation,
+		endLocation,
+		ECollisionChannel::ECC_Visibility);
 
-	return false;
+	outHitPosition = (objectHit == true) ? hitResult.Location : FVector(0.0f);
+
+	return objectHit;
 }
