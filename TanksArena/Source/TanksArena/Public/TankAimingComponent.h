@@ -37,5 +37,8 @@ public:
 	void SetBarrel(UStaticMeshComponent* barrel);
 
 private:
-	UStaticMeshComponent* _barrel = nullptr;	// Reference to the barrel static mesh
+	UStaticMeshComponent* _barrel = nullptr;					// Reference to the barrel static mesh
+
+private:
+	const FName PROJECTILE_SPAWN_SOCKET = "Projectile Spawn";	// name that was given to the socket where the projectiles will spawn from
 };

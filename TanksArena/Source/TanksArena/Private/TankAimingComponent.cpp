@@ -4,6 +4,7 @@
 
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values for this component's properties
@@ -36,9 +37,27 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 }
 
 void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) const {
-	// Log what we're aiming at
-	UE_LOG(LogTemp, Warning, TEXT("Firing projectile at %f m/s"),
-		launchSpeed);
+	// Get out if there's no barrel
+	if (!_barrel)
+		return;
+
+	// Variables for the launch direction function
+	FVector outLaunchVelocity;
+	FVector startLaunchLocation = _barrel->GetSocketLocation(PROJECTILE_SPAWN_SOCKET);
+	// Calculate the projectile velocity then store it in the out param
+	if (UGameplayStatics::SuggestProjectileVelocity(this,
+		outLaunchVelocity,
+		startLaunchLocation,
+		hitWorldLocation,
+		launchSpeed)) {
+		// The launch succeded
+		// Get aim direction
+		FVector projectileAimDirection = outLaunchVelocity.GetSafeNormal();
+		// Log out the aiming point
+		UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"),
+			*GetOwner()->GetName(),
+			*projectileAimDirection.ToString());
+	}
 }
 
 void UTankAimingComponent::SetBarrel(UStaticMeshComponent* barrel) {
