@@ -43,4 +43,7 @@ public:
 private:
 	UTankAimingComponent* _tankAimingComponent = nullptr;	// Reference to the tank aiming component
 															// needed to delegate tasks to
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+		float _launchSpeed = 10000.0f;						// Speed at which to launch the projectiles
 };

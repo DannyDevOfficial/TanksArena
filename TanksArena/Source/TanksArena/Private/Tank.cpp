@@ -38,7 +38,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::AimAt(FVector hitPosition) const {
 	// Delegate aiming to dedicated component
-	_tankAimingComponent->AimAt(hitPosition);
+	_tankAimingComponent->AimAt(hitPosition, _launchSpeed);
 }
 
 void ATank::SetBarrel(UStaticMeshComponent* barrel) const {

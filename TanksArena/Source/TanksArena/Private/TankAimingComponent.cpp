@@ -35,12 +35,10 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector hitWorldLocation) const {
+void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) const {
 	// Log what we're aiming at
-	UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s from %s"),
-		*GetOwner()->GetName(),
-		*hitWorldLocation.ToString(),
-		*_barrel->GetComponentLocation().ToString());
+	UE_LOG(LogTemp, Warning, TEXT("Firing projectile at %f m/s"),
+		launchSpeed);
 }
 
 void UTankAimingComponent::SetBarrel(UStaticMeshComponent* barrel) {

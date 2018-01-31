@@ -27,8 +27,9 @@ public:
 public:
 	/** Takes care of aiming at a given position in the world.
 	* @param Vector containing the world location to aim at
+	* @param The speed at which to launch a projectile
 	*/
-	void AimAt(FVector hitWorldLocation) const;
+	void AimAt(FVector hitWorldLocation, float launchSpeed) const;
 
 	/** Setter for the barrel static mesh
 	* @param UStaticMeshComponent representing the barrel to set
