@@ -57,6 +57,9 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) co
 		UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"),
 			*GetOwner()->GetName(),
 			*projectileAimDirection.ToString());
+
+		// Move the barrel!
+		MoveBarrel(projectileAimDirection);
 	}
 }
 
@@ -67,4 +70,14 @@ void UTankAimingComponent::SetBarrel(UStaticMeshComponent* barrel) {
 
 	// Set the barrel
 	_barrel = barrel;
+}
+
+void UTankAimingComponent::MoveBarrel(FVector aimDirection) const {
+	// Get barrel current rotation
+	FRotator barrelRotation = _barrel->GetForwardVector().Rotation();
+	// Turn the aim direction vector into a rotation
+	FRotator aimDirectionAsRotation = aimDirection.Rotation();
+	// Get the difference between aim direction rotation and barrel rotation
+	// and this will be how much to rotate the barrel this frame
+	FRotator deltaRotator = aimDirectionAsRotation - barrelRotation;
 }

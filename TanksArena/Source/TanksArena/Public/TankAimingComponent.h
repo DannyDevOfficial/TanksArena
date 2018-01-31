@@ -37,6 +37,12 @@ public:
 	void SetBarrel(UStaticMeshComponent* barrel);
 
 private:
+	/** Calculates barrel rotation and moves it based on that
+	* @param Suggested direction at which to aim
+	*/
+	void MoveBarrel(FVector aimDirection) const;
+
+private:
 	UStaticMeshComponent* _barrel = nullptr;					// Reference to the barrel static mesh
 
 private:
