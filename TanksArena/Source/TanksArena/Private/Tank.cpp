@@ -43,6 +43,11 @@ void ATank::AimAt(FVector hitPosition) const {
 	_tankAimingComponent->AimAt(hitPosition, _launchSpeed);
 }
 
+void ATank::Fire() const {
+	// Log for now
+	UE_LOG(LogTemp, Warning, TEXT("Firing!"));
+}
+
 void ATank::SetBarrel(UTankBarrel* barrel) const {
 	// Delegate it to the aiming component
 	_tankAimingComponent->SetBarrel(barrel);

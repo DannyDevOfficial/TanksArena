@@ -36,6 +36,11 @@ public:
 	*/
 	void AimAt(FVector hitPosition) const;
 
+	/** Fires projectiles when its bound input it triggered
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Input")
+		void Fire() const;
+
 	/** Setter for the barrel static mesh
 	* @param UStaticMeshComponent representing the barrel to set
 	*/
