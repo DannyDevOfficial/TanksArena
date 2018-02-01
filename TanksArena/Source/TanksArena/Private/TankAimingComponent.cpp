@@ -60,11 +60,6 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) co
 		// The launch succeded
 		// Get aim direction
 		FVector projectileAimDirection = outLaunchVelocity.GetSafeNormal();
-		// Log out the aiming point
-		UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"),
-			*GetOwner()->GetName(),
-			*projectileAimDirection.ToString());
-
 		// Move the barrel!
 		MoveBarrel(projectileAimDirection);
 	}
@@ -89,5 +84,5 @@ void UTankAimingComponent::MoveBarrel(FVector aimDirection) const {
 	FRotator deltaRotator = aimDirectionAsRotation - barrelRotation;
 
 	// Move barrel
-	_barrel->Elevate(5.0f);
+	_barrel->Elevate(deltaRotator.Pitch);
 }
