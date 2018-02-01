@@ -58,10 +58,13 @@ void ATank::Fire() const {
 	FRotator outProjectileSpawnRotation =
 		_barrel->GetSocketRotation(FName(UTankAimingComponent::PROJECTILE_SPAWN_SOCKET));
 	
-	AActor* newProjectile = 
+	AProjectile* newProjectile = 
 		GetWorld()->SpawnActor<AProjectile>(_projectile,
 			outProjectileSpawnLocation,
 			outProjectileSpawnRotation);
+
+	// Call the launch function from the projectile
+	newProjectile->Launch(_launchSpeed);
 }
 
 void ATank::SetBarrel(UTankBarrel* barrel) {

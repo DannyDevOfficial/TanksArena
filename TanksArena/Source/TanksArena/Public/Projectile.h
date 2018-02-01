@@ -2,6 +2,8 @@
 
 #pragma once
 
+class UProjectileMovementComponent;
+
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
@@ -23,6 +25,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+public:
+	/** Launches the projectile forward at the given speed
+	* @param Speed at which to launch the projectile
+	*/
+	void Launch(float speed) const;
+
 	
-	
+private:
+	UProjectileMovementComponent* _projectileMovComp = nullptr;	// reference to a projectile movement component
 };
