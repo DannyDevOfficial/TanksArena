@@ -4,6 +4,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 
 // Sets default values
@@ -47,3 +48,7 @@ void ATank::SetBarrel(UTankBarrel* barrel) const {
 	_tankAimingComponent->SetBarrel(barrel);
 }
 
+void ATank::SetTurret(UTankTurret* turret) const {
+	// Delegate it to the aiming component
+	_tankAimingComponent->SetTurret(turret);
+}

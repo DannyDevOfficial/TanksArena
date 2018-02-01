@@ -4,6 +4,7 @@
 
 class UTankAimingComponent;
 class UTankBarrel;
+class UTankTurret;
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -40,6 +41,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetBarrel(UTankBarrel* barrel) const;
+
+	/** Setter for the turret static mesh
+	* @param UStaticMeshComponent representing the turret to set
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void SetTurret(UTankTurret* turret) const;
 
 private:
 	UTankAimingComponent* _tankAimingComponent = nullptr;	// Reference to the tank aiming component

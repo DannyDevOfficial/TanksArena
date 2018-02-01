@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 
 // Sets default values for this component's properties
@@ -72,6 +73,15 @@ void UTankAimingComponent::SetBarrel(UTankBarrel* barrel) {
 
 	// Set the barrel
 	_barrel = barrel;
+}
+
+void UTankAimingComponent::SetTurret(UTankTurret* turret) {
+	// Get out if it's null
+	if (!turret)
+		return;
+
+	// Set the turret
+	_turret = turret;
 }
 
 void UTankAimingComponent::MoveBarrel(FVector aimDirection) const {

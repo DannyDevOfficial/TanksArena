@@ -15,7 +15,7 @@ class TANKSARENA_API UTankBarrel : public UStaticMeshComponent
 	GENERATED_BODY()
 
 public:
-	/** Moves the barrel a given amount of degrees per second
+	/** Moves the barrel according to the relative speed
 	* @param -1 to go down and +1 to go up
 	*/
 	void Elevate(float relativeSpeed);

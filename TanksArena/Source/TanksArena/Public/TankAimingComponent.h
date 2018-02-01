@@ -3,6 +3,7 @@
 #pragma once
 
 class UTankBarrel;
+class UTankTurret;
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -38,6 +39,11 @@ public:
 	*/
 	void SetBarrel(UTankBarrel* barrel);
 
+	/** Setter for the turret static mesh
+	* @param UStaticMeshComponent representing the turret to set
+	*/
+	void SetTurret(UTankTurret* turret);
+
 private:
 	/** Calculates barrel rotation and moves it based on that
 	* @param Suggested direction at which to aim
@@ -46,6 +52,7 @@ private:
 
 private:
 	UTankBarrel* _barrel = nullptr;					// Reference to the barrel static mesh
+	UTankTurret* _turret = nullptr;					// Reference to the turret static mesh
 
 private:
 	const FName PROJECTILE_SPAWN_SOCKET = "Projectile Spawn";	// name that was given to the socket where the projectiles will spawn from
