@@ -40,7 +40,7 @@ public:
 	/** Fires projectiles when its bound input it triggered
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Input")
-		void Fire() const;
+		void Fire();
 
 	/** Setter for the barrel static mesh
 	* @param UStaticMeshComponent representing the barrel to set
@@ -61,8 +61,14 @@ private:
 	UTankBarrel* _barrel = nullptr;							// Reference to a barrel static mesh component
 	
 	UPROPERTY(EditAnywhere, Category = "Firing")
-		TSubclassOf<AProjectile> _projectile = nullptr;				// Reference to a projectile that will be spawned
+		TSubclassOf<AProjectile> _projectile = nullptr;		// Reference to a projectile that will be spawned
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 		float _launchSpeed = 4000.0f;						// Speed at which to launch the projectiles
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+		double _reloadTimeSecs = 3.0f;						// Time it takes for the barrel to reload and be able
+															// to shoot again
+
+	double _lastTimeReloadedSecs = 0.0f;					// Last time barrel reloaded
 };

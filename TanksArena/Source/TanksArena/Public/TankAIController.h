@@ -26,17 +26,4 @@ protected:
 	* @param Time it took the last frame to complete
 	*/
 	virtual void Tick(float DeltaTime) override;
-
-private:
-	/**
-	* Gets the tank that's controlled by the AI
-	* @return Tank controlled by the AI
-	*/
-	ATank* GetControlledAITank() const;
-
-	/**
-	* Searches for the tank controlled by the player
-	* @return Tank controlled by the player
-	*/
-	ATank* FindPlayerController() const;
 };

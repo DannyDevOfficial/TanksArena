@@ -47,24 +47,30 @@ void ATank::AimAt(FVector hitPosition) const {
 	_tankAimingComponent->AimAt(hitPosition, _launchSpeed);
 }
 
-void ATank::Fire() const {
+void ATank::Fire() {
 	// Get out if there is no barrel
 	if (!_barrel || !_projectile)
 		return;
 
-	// Spawn a projectile at the barrel's socket location and rotation
-	FVector outProjectileSpawnLocation =
-		_barrel->GetSocketLocation(FName(UTankAimingComponent::PROJECTILE_SPAWN_SOCKET));
-	FRotator outProjectileSpawnRotation =
-		_barrel->GetSocketRotation(FName(UTankAimingComponent::PROJECTILE_SPAWN_SOCKET));
-	
-	AProjectile* newProjectile = 
-		GetWorld()->SpawnActor<AProjectile>(_projectile,
-			outProjectileSpawnLocation,
-			outProjectileSpawnRotation);
+	// Timer for firing projectiles
+	if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) > _reloadTimeSecs) {
+		// Spawn a projectile at the barrel's socket location and rotation
+		FVector outProjectileSpawnLocation =
+			_barrel->GetSocketLocation(FName(UTankAimingComponent::PROJECTILE_SPAWN_SOCKET));
+		FRotator outProjectileSpawnRotation =
+			_barrel->GetSocketRotation(FName(UTankAimingComponent::PROJECTILE_SPAWN_SOCKET));
 
-	// Call the launch function from the projectile
-	newProjectile->Launch(_launchSpeed);
+		AProjectile* newProjectile =
+			GetWorld()->SpawnActor<AProjectile>(_projectile,
+				outProjectileSpawnLocation,
+				outProjectileSpawnRotation);
+
+		// Call the launch function from the projectile
+		newProjectile->Launch(_launchSpeed);
+
+		// Update the last time barrel reloaded
+		_lastTimeReloadedSecs = FPlatformTime::Seconds();
+	}
 }
 
 void ATank::SetBarrel(UTankBarrel* barrel) {
