@@ -18,7 +18,7 @@ public:
 	/** Moves the barrel a given amount of degrees per second
 	* @param Barrel will be moved this amount of degrees per second
 	*/
-	void Elevate(float degreesPerSec) const;
+	void Elevate(float relativeSpeed) const;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Setup")

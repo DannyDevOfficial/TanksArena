@@ -26,7 +26,6 @@ void UTankAimingComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
 }
 
 
@@ -47,11 +46,17 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) co
 	FVector outLaunchVelocity;
 	FVector startLaunchLocation = _barrel->GetSocketLocation(PROJECTILE_SPAWN_SOCKET);
 	// Calculate the projectile velocity then store it in the out param
-	if (UGameplayStatics::SuggestProjectileVelocity(this,
+	bool aimSoultionFound = UGameplayStatics::SuggestProjectileVelocity(this,
 		outLaunchVelocity,
 		startLaunchLocation,
 		hitWorldLocation,
-		launchSpeed)) {
+		launchSpeed,
+		false,
+		0.0f,
+		0.0f,
+		ESuggestProjVelocityTraceOption::DoNotTrace);
+	// Aim solution was found
+	if (aimSoultionFound) {
 		// The launch succeded
 		// Get aim direction
 		FVector projectileAimDirection = outLaunchVelocity.GetSafeNormal();
@@ -66,7 +71,7 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) co
 }
 
 void UTankAimingComponent::SetBarrel(UTankBarrel* barrel) {
-	// Get out if there it's null
+	// Get out if it's null
 	if (!barrel)
 		return;
 

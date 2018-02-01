@@ -2,10 +2,10 @@
 
 #include "TankBarrel.h"
 
-void UTankBarrel::Elevate(float degreesPerSec) const {
+void UTankBarrel::Elevate(float relativeSpeed) const {
 	// Move the barrel the given amount of degrees per second
 	UE_LOG(LogTemp,
 		Warning,
 		TEXT("Barrel moved %f degrees per second"),
-		degreesPerSec);
+		relativeSpeed);
 }
