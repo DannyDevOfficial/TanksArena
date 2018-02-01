@@ -45,10 +45,10 @@ public:
 	void SetTurret(UTankTurret* turret);
 
 private:
-	/** Calculates barrel rotation and moves it based on that
+	/** Calculates barrel rotation and moves it and the turret based on that
 	* @param Suggested direction at which to aim
 	*/
-	void MoveBarrel(FVector aimDirection) const;
+	void MoveBarrelAndTurret(FVector aimDirection) const;
 
 private:
 	UTankBarrel* _barrel = nullptr;					// Reference to the barrel static mesh

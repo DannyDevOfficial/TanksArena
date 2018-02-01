@@ -40,7 +40,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) const {
 	// Get out if there's no barrel
-	if (!_barrel)
+	if (!_barrel || !_turret)
 		return;
 
 	// Variables for the launch direction function
@@ -62,7 +62,7 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) co
 		// Get aim direction
 		FVector projectileAimDirection = outLaunchVelocity.GetSafeNormal();
 		// Move the barrel!
-		MoveBarrel(projectileAimDirection);
+		MoveBarrelAndTurret(projectileAimDirection);
 	}
 }
 
@@ -84,7 +84,7 @@ void UTankAimingComponent::SetTurret(UTankTurret* turret) {
 	_turret = turret;
 }
 
-void UTankAimingComponent::MoveBarrel(FVector aimDirection) const {
+void UTankAimingComponent::MoveBarrelAndTurret(FVector aimDirection) const {
 	// Get barrel current rotation
 	FRotator barrelRotation = _barrel->GetForwardVector().Rotation();
 	// Turn the aim direction vector into a rotation
@@ -95,4 +95,6 @@ void UTankAimingComponent::MoveBarrel(FVector aimDirection) const {
 
 	// Move barrel
 	_barrel->Elevate(deltaRotator.Pitch);
+	// Move turret
+	_turret->RotateAround(deltaRotator.Yaw);
 }

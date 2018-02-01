@@ -53,5 +53,5 @@ private:
 															// needed to delegate tasks to
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-		float _launchSpeed = 10000.0f;						// Speed at which to launch the projectiles
+		float _launchSpeed = 4000.0f;						// Speed at which to launch the projectiles
 };
