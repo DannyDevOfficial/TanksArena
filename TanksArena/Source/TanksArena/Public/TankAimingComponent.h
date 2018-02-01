@@ -50,10 +50,10 @@ private:
 	*/
 	void MoveBarrelAndTurret(FVector aimDirection) const;
 
+public:
+	const static FName PROJECTILE_SPAWN_SOCKET;		// name that was given to the socket where the projectiles will spawn from
+
 private:
 	UTankBarrel* _barrel = nullptr;					// Reference to the barrel static mesh
 	UTankTurret* _turret = nullptr;					// Reference to the turret static mesh
-
-private:
-	const FName PROJECTILE_SPAWN_SOCKET = "Projectile Spawn";	// name that was given to the socket where the projectiles will spawn from
 };

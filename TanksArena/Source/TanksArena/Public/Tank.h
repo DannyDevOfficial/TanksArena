@@ -5,6 +5,7 @@
 class UTankAimingComponent;
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -45,7 +46,7 @@ public:
 	* @param UStaticMeshComponent representing the barrel to set
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void SetBarrel(UTankBarrel* barrel) const;
+		void SetBarrel(UTankBarrel* barrel);
 
 	/** Setter for the turret static mesh
 	* @param UStaticMeshComponent representing the turret to set
@@ -56,6 +57,11 @@ public:
 private:
 	UTankAimingComponent* _tankAimingComponent = nullptr;	// Reference to the tank aiming component
 															// needed to delegate tasks to
+	
+	UTankBarrel* _barrel = nullptr;							// Reference to a barrel static mesh component
+	
+	UPROPERTY(EditAnywhere, Category = "Firing")
+		TSubclassOf<AProjectile> _projectile = nullptr;				// Reference to a projectile that will be spawned
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 		float _launchSpeed = 4000.0f;						// Speed at which to launch the projectiles

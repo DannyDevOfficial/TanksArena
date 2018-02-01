@@ -9,6 +9,8 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 
+// Init static member
+const FName UTankAimingComponent::PROJECTILE_SPAWN_SOCKET = "Projectile Spawn";
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
