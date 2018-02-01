@@ -21,6 +21,6 @@ public:
 	void RotateAround(float relativeSpeed);
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Setup")
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float _maxDegreesPerSec = 25.0f;	// Max speed of movement in degrees per second
 };

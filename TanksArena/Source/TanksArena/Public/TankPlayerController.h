@@ -69,14 +69,14 @@ private:
 		FVector& outHitPosition) const;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float _crossHairXLocation = 0.5f;		// Location of the crosshair on the viewport horizontally,
 												// meaning it's in the middle of the viewport
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float _crossHairYLocation = 0.33333f;	// Location of the crosshair on the viewport vertically,
 												// meaning it's a third of the way down the viewport
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float _lineTraceMaxRange = 10000.0f;	// The max range for the line trace
 };
