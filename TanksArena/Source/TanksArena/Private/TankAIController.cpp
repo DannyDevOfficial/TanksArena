@@ -16,16 +16,20 @@ void ATankAIController::Tick(float DeltaTime) {
 	// Call parent implementation
 	Super::Tick(DeltaTime);
 
-	// Get controlled tank
+	// Get controlled tank and player target
 	ATank* controlledAItank = Cast<ATank>(GetPawn());
+	ATank* playerTarget = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-	// Get out if there is no controlled tank
-	if (!controlledAItank)
+	// Get out if there is no controlled tank or player
+	if (!controlledAItank || !playerTarget)
 		return;
+
+	// Move ai tank towards player
+	MoveToActor(playerTarget, _acceptanceRadius);
 
 	// Find the controlled tank and with it
 	// aim at the player location
-	controlledAItank->AimAt(Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn())->GetTargetLocation());
+	controlledAItank->AimAt(playerTarget->GetTargetLocation());
 
 	// Fire a projectile at the player
 	controlledAItank->Fire();

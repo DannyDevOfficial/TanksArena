@@ -26,4 +26,8 @@ protected:
 	* @param Time it took the last frame to complete
 	*/
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float _acceptanceRadius = 3000.0f;	// How far does the AI tank have to be before it stops moving
 };

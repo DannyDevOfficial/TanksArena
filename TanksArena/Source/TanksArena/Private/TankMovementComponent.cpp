@@ -35,3 +35,11 @@ void UTankMovementComponent::IntendTurnRight(float theThrow) const {
 	_leftTrack->SetThrottle(theThrow);
 	_rightTrack->SetThrottle(-theThrow);
 }
+
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity,
+	bool bForceMaxSpeed) {
+	// Log to console for now
+	UE_LOG(LogTemp, Warning, TEXT("%s's vectoring to %s"),
+		*GetOwner()->GetName(),
+		*MoveVelocity.ToString());
+}

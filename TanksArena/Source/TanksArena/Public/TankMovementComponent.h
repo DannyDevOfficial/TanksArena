@@ -36,6 +36,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void IntendTurnRight(float theThrow) const;
 
+	/** Check the parent class for details
+	*/
+	virtual void RequestDirectMove(const FVector& MoveVelocity,
+		bool bForceMaxSpeed) override;
+
 private:
 	UTankTrack* _leftTrack = nullptr;	// Reference to the tank's left track
 	UTankTrack* _rightTrack = nullptr;	// Reference to the tank's right track
