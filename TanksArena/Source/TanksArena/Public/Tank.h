@@ -3,6 +3,7 @@
 #pragma once
 
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -54,21 +55,25 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetTurret(UTankTurret* turret) const;
 
+protected:
+	UPROPERTY(BlueprintReadOnly)
+		UTankMovementComponent* _tankMovementComponent = nullptr;	// Reference to the tank movement component
+
 private:
-	UTankAimingComponent* _tankAimingComponent = nullptr;	// Reference to the tank aiming component
-															// needed to delegate tasks to
+	UTankAimingComponent* _tankAimingComponent = nullptr;		// Reference to the tank aiming component
+																// needed to delegate tasks to
 	
-	UTankBarrel* _barrel = nullptr;							// Reference to a barrel static mesh component
+	UTankBarrel* _barrel = nullptr;								// Reference to a barrel static mesh component
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		TSubclassOf<AProjectile> _projectile = nullptr;		// Reference to a projectile that will be spawned
+		TSubclassOf<AProjectile> _projectile = nullptr;			// Reference to a projectile that will be spawned
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float _launchSpeed = 4000.0f;						// Speed at which to launch the projectiles
+		float _launchSpeed = 4000.0f;							// Speed at which to launch the projectiles
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		double _reloadTimeSecs = 3.0f;						// Time it takes for the barrel to reload and be able
-															// to shoot again
+		double _reloadTimeSecs = 3.0f;							// Time it takes for the barrel to reload and be able
+																// to shoot again
 
-	double _lastTimeReloadedSecs = 0.0f;					// Last time barrel reloaded
+	double _lastTimeReloadedSecs = 0.0f;						// Last time barrel reloaded
 };

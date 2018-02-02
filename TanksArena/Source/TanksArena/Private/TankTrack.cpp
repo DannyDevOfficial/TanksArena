@@ -3,9 +3,6 @@
 #include "TankTrack.h"
 
 void UTankTrack::SetThrottle(float throttle) const {
-	// Log out the throttle for now
-	UE_LOG(LogTemp, Warning, TEXT("%s throttle: %f"), *GetName(), throttle);
-
 	// Get the force vector to apply to the tracks
 	FVector forceVectorToApplyToTracks =
 		GetForwardVector() * _maxTrackDrivingForceN * throttle;
