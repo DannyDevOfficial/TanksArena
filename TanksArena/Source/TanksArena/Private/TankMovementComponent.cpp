@@ -2,7 +2,21 @@
 
 #include "TankMovementComponent.h"
 
+#include "TankTrack.h"
+
+void UTankMovementComponent::Initialize(UTankTrack* leftTrack, UTankTrack* rightTrack) {
+	// Get out if the references are null
+	if (!leftTrack || !rightTrack)
+		return;
+
+	// Set the member variables
+	_leftTrack = leftTrack;
+	_rightTrack = rightTrack;
+}
+
 void UTankMovementComponent::IntendMoveForward(float theThrow) const {
-	// Log out the throttle for now
-	UE_LOG(LogTemp, Warning, TEXT("throw is: %f"), theThrow);
+	// Set the throttle for the tracks based on
+	// the argument passed in
+	_leftTrack->SetThrottle(theThrow);
+	_rightTrack->SetThrottle(theThrow);
 }

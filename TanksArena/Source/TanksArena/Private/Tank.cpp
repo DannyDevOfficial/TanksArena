@@ -3,7 +3,6 @@
 #include "Tank.h"
 
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Projectile.h"
@@ -20,8 +19,6 @@ ATank::ATank()
 
 	// Make the aiming component at construction time
 	_tankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	// Make the movement component at construction time
-	_tankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called when the game starts or when spawned

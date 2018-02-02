@@ -3,7 +3,6 @@
 #pragma once
 
 class UTankAimingComponent;
-class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -54,10 +53,6 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetTurret(UTankTurret* turret) const;
-
-protected:
-	UPROPERTY(BlueprintReadOnly)
-		UTankMovementComponent* _tankMovementComponent = nullptr;	// Reference to the tank movement component
 
 private:
 	UTankAimingComponent* _tankAimingComponent = nullptr;		// Reference to the tank aiming component
