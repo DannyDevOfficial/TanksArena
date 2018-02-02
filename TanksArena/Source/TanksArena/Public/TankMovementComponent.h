@@ -30,6 +30,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void IntendMoveForward(float theThrow) const;
 
+	/** Sets up the tank to move right and left
+	* @param How far right or left the tank will move
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Input")
+		void IntendTurnRight(float theThrow) const;
+
 private:
 	UTankTrack* _leftTrack = nullptr;	// Reference to the tank's left track
 	UTankTrack* _rightTrack = nullptr;	// Reference to the tank's right track

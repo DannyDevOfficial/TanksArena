@@ -15,8 +15,23 @@ void UTankMovementComponent::Initialize(UTankTrack* leftTrack, UTankTrack* right
 }
 
 void UTankMovementComponent::IntendMoveForward(float theThrow) const {
+	// Get out if the references are null
+	if (!_leftTrack || !_rightTrack)
+		return;
+
 	// Set the throttle for the tracks based on
 	// the argument passed in
 	_leftTrack->SetThrottle(theThrow);
 	_rightTrack->SetThrottle(theThrow);
+}
+
+void UTankMovementComponent::IntendTurnRight(float theThrow) const {
+	// Get out if the references are null
+	if (!_leftTrack || !_rightTrack)
+		return;
+
+	// Set the throttle for the tracks based on
+	// the argument passed in
+	_leftTrack->SetThrottle(theThrow);
+	_rightTrack->SetThrottle(-theThrow);
 }
