@@ -9,7 +9,7 @@
 /**
  * Represents track static mesh, gives control over it
  */
-UCLASS(meta = (BlueprintSpawnableComponent), hidecategories = ("Collision"))
+UCLASS(meta = (BlueprintSpawnableComponent))
 class TANKSARENA_API UTankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
@@ -21,4 +21,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void SetThrottle(float throttle) const;
 	
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float _maxTrackDrivingForceN = 40000000.0f;	// The max amount of force in Newtons at which the track can move
+
 };
