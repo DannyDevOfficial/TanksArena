@@ -38,8 +38,13 @@ void UTankMovementComponent::IntendTurnRight(float theThrow) const {
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity,
 	bool bForceMaxSpeed) {
-	// Log to console for now
-	UE_LOG(LogTemp, Warning, TEXT("%s's vectoring to %s"),
-		*GetOwner()->GetName(),
-		*MoveVelocity.ToString());
+	// Get the tank's forward vector as a unit vector
+	FVector tankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	// Make the movement intention of the tank into a unit vector
+	FVector AItankForwardIntention = MoveVelocity.GetSafeNormal();
+	// Take the dot product between the two to find out how parallel these two are
+	// and move to make them parallel
+	float dotProduct = FVector::DotProduct(tankForward, AItankForwardIntention);
+	// Use it in the movement function
+	IntendMoveForward(dotProduct);
 }
