@@ -27,13 +27,15 @@ protected:
 	*/
 	virtual void Tick(float DeltaTime) override;
 
-private:
+protected:
 	/**
 	* Gets the tank that's controlled by the player
 	* @return Tank controlled by the player
 	*/
-	ATank* GetControlledTank() const;
+	UFUNCTION(BlueprintCallable, Category = "Getter")
+		ATank* GetControlledTank() const;
 
+private:
 	/** Makes the tank move the barrel towards the point
 	* where the crosshair intersects the world
 	*/

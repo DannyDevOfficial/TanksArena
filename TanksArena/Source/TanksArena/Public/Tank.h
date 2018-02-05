@@ -53,11 +53,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void SetTurret(UTankTurret* turret) const;
-
-private:
+protected:
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* _tankAimingComponent = nullptr;		// Reference to the tank aiming component
 																// needed to delegate tasks to
-	
+
+private:	
 	UTankBarrel* _barrel = nullptr;								// Reference to a barrel static mesh component
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
