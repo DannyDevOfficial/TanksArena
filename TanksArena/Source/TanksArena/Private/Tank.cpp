@@ -4,7 +4,6 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
-#include "TankTurret.h"
 #include "Projectile.h"
 
 #include "Engine/World.h"
@@ -16,9 +15,6 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	// Make the aiming component at construction time
-	_tankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
 
 // Called when the game starts or when spawned
@@ -71,17 +67,4 @@ void ATank::Fire() {
 		// Update the last time barrel reloaded
 		_lastTimeReloadedSecs = FPlatformTime::Seconds();
 	}
-}
-
-void ATank::SetBarrel(UTankBarrel* barrel) {
-	// Delegate it to the aiming component
-	_tankAimingComponent->SetBarrel(barrel);
-
-	// Keep a local reference of it too
-	_barrel = barrel;
-}
-
-void ATank::SetTurret(UTankTurret* turret) const {
-	// Delegate it to the aiming component
-	_tankAimingComponent->SetTurret(turret);
 }

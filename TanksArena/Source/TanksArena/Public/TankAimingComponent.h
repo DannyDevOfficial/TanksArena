@@ -38,21 +38,19 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:
+	/** Initializes the aiming component
+	* @param tank turret to set
+	* @param tank barrel to set
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void Initialize(UTankTurret* tankTurret,
+			UTankBarrel* tankBarrel);
+
 	/** Takes care of aiming at a given position in the world.
 	* @param Vector containing the world location to aim at
 	* @param The speed at which to launch a projectile
 	*/
 	void AimAt(FVector hitWorldLocation, float launchSpeed) const;
-
-	/** Setter for the barrel static mesh
-	* @param UStaticMeshComponent representing the barrel to set
-	*/
-	void SetBarrel(UTankBarrel* barrel);
-
-	/** Setter for the turret static mesh
-	* @param UStaticMeshComponent representing the turret to set
-	*/
-	void SetTurret(UTankTurret* turret);
 
 private:
 	/** Calculates barrel rotation and moves it and the turret based on that

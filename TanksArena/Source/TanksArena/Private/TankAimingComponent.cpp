@@ -40,6 +40,17 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
+void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
+	UTankBarrel* tankBarrel) {
+	// Get out if nothing was passed in
+	if (!tankTurret || !tankBarrel)
+		return;
+
+	// Set the members
+	_turret = tankTurret;
+	_barrel = tankBarrel;
+}
+
 void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) const {
 	// Get out if there's no barrel
 	if (!_barrel || !_turret)
@@ -66,24 +77,6 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) co
 		// Move the barrel!
 		MoveBarrelAndTurret(projectileAimDirection);
 	}
-}
-
-void UTankAimingComponent::SetBarrel(UTankBarrel* barrel) {
-	// Get out if it's null
-	if (!barrel)
-		return;
-
-	// Set the barrel
-	_barrel = barrel;
-}
-
-void UTankAimingComponent::SetTurret(UTankTurret* turret) {
-	// Get out if it's null
-	if (!turret)
-		return;
-
-	// Set the turret
-	_turret = turret;
 }
 
 void UTankAimingComponent::MoveBarrelAndTurret(FVector aimDirection) const {

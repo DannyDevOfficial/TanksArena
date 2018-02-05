@@ -4,7 +4,6 @@
 
 class UTankAimingComponent;
 class UTankBarrel;
-class UTankTurret;
 class AProjectile;
 
 #include "CoreMinimal.h"
@@ -42,21 +41,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void Fire();
 
-	/** Setter for the barrel static mesh
-	* @param UStaticMeshComponent representing the barrel to set
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void SetBarrel(UTankBarrel* barrel);
-
-	/** Setter for the turret static mesh
-	* @param UStaticMeshComponent representing the turret to set
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void SetTurret(UTankTurret* turret) const;
 protected:
 	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* _tankAimingComponent = nullptr;		// Reference to the tank aiming component
-																// needed to delegate tasks to
+		UTankAimingComponent* _tankAimingComponent = nullptr;		// Reference to the tank aiming component
+																	// needed to delegate tasks to
 
 private:	
 	UTankBarrel* _barrel = nullptr;								// Reference to a barrel static mesh component
