@@ -9,7 +9,7 @@
 /**
  * Represents the barrel static mesh, will give control over it
  */
-UCLASS(meta = (BlueprintSpawnableComponent), hidecategories = ("Collision"))
+UCLASS(meta = (BlueprintSpawnableComponent))
 class TANKSARENA_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()

@@ -42,9 +42,15 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity,
 	FVector tankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	// Make the movement intention of the tank into a unit vector
 	FVector AItankForwardIntention = MoveVelocity.GetSafeNormal();
+
 	// Take the dot product between the two to find out how parallel these two are
 	// and move to make them parallel
-	float dotProduct = FVector::DotProduct(tankForward, AItankForwardIntention);
-	// Use it in the movement function
-	IntendMoveForward(dotProduct);
+	float forwardThrow = FVector::DotProduct(tankForward, AItankForwardIntention);
+	// Take the cross product between the two to find out how perpendicular these two are
+	// and turn to make the AI face the player
+	FVector crossedVector = FVector::CrossProduct(tankForward, AItankForwardIntention);
+
+	// Move the AI tank
+	IntendMoveForward(forwardThrow);
+	IntendTurnRight(crossedVector.Z);
 }
