@@ -3,6 +3,7 @@
 #pragma once
 
 class ATank;
+class UTankAimingComponent;
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
@@ -34,6 +35,12 @@ protected:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Getter")
 		ATank* GetControlledTank() const;
+
+	/**
+	* Event that fires when an aiming component is found
+	*/
+	UFUNCTION(BlueprintImplementableEvent, Category = "Event")
+		void FoundAimingComponent(UTankAimingComponent* aimingComponent);
 
 private:
 	/** Makes the tank move the barrel towards the point

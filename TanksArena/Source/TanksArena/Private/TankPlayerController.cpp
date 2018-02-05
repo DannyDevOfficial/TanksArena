@@ -3,6 +3,7 @@
 #include "TankPlayerController.h"
 
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
 #include "Camera/PlayerCameraManager.h"
@@ -10,6 +11,17 @@
 void ATankPlayerController::BeginPlay() {
 	// Execute what's in the parent class
 	Super::BeginPlay();
+
+	// Find aiming component
+	auto aimingComp =
+		GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+
+	if (aimingComp) {
+		// Feed it to the event
+		FoundAimingComponent(aimingComp);
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("Aiming component not found at begin play"));
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {

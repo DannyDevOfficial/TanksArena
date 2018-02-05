@@ -59,13 +59,13 @@ private:
 	void MoveBarrelAndTurret(FVector aimDirection) const;
 
 public:
-	const static FName PROJECTILE_SPAWN_SOCKET;				// name that was given to the socket where the projectiles will spawn from
+	const static FName PROJECTILE_SPAWN_SOCKET;					// name that was given to the socket where the projectiles will spawn from
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState _firingState = EFiringState::Reloading;	// current state the tank is in
 
 private:
-	UTankBarrel* _barrel = nullptr;							// Reference to the barrel static mesh
-	UTankTurret* _turret = nullptr;							// Reference to the turret static mesh
+	UTankBarrel* _barrel = nullptr;								// Reference to the barrel static mesh
+	UTankTurret* _turret = nullptr;								// Reference to the turret static mesh
 };
