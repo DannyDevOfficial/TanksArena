@@ -2,6 +2,29 @@
 
 #include "TankTrack.h"
 
+UTankTrack::UTankTrack() {
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
+	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// Calculate the slippage speed of the tank
+	float slippageSpeed =
+		FVector::DotProduct(GetComponentVelocity(), GetRightVector());
+	// Calculate the acceleration needed to correct that slippage
+	FVector correctionAcceleration = (-slippageSpeed / DeltaTime) *
+		GetRightVector();
+	// Caculate the force to apply in the opposite direction of the slippage
+	// Divide it by two cause there are two tracks or we would apply the whole force on both the tracks
+	auto tankRootComponentInHierarchy = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	FVector correctionForce = (tankRootComponentInHierarchy->GetMass() * correctionAcceleration) / 2;
+	// Apply the force to the tank
+	tankRootComponentInHierarchy->AddForce(correctionForce);
+}
+
 void UTankTrack::SetThrottle(float throttle) const {
 	// Get the force vector to apply to the tracks
 	FVector forceVectorToApplyToTracks =

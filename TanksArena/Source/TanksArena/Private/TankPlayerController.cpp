@@ -30,7 +30,7 @@ void ATankPlayerController::Tick(float DeltaTime) {
 
 void ATankPlayerController::AimAtCrosshair() {
 	// Get out if no pawn was found
-	if (!ensure(GetPawn()))
+	if (!GetPawn())
 		return;
 
 	// Find aiming component

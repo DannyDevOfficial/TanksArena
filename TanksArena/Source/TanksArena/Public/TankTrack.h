@@ -15,6 +15,14 @@ class TANKSARENA_API UTankTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 
 public:
+	// Sets default values for this component's properties
+	UTankTrack();
+
+public:
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+public:
 	/** Sets the throttle for the tracks
 	* @param throttle value to set
 	*/
