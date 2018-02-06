@@ -40,8 +40,14 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// Set the current state to reloading if the timer is still running
-	if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) > _reloadTimeSecs)
+	if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) < _reloadTimeSecs)
 		_firingState = EFiringState::Reloading;
+	else if (IsBarrelMoving())
+		// Tank's aiming if barrel is moving
+		_firingState = EFiringState::Aiming;
+	else
+		// Tank's firing if none of previous conditions were met
+		_firingState = EFiringState::Locked;
 }
 
 void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
@@ -81,7 +87,7 @@ void UTankAimingComponent::Fire() {
 	}
 }
 
-void UTankAimingComponent::AimAt(FVector hitWorldLocation) const {
+void UTankAimingComponent::AimAt(FVector hitWorldLocation) {
 	// Get out if there's no barrel
 	if (!ensure(_barrel && _turret))
 		return;
@@ -102,18 +108,18 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation) const {
 	// Aim solution was found
 	if (aimSoultionFound) {
 		// The launch succeded
-		// Get aim direction
-		FVector projectileAimDirection = outLaunchVelocity.GetSafeNormal();
+		// Set aim direction
+		_aimDirection = outLaunchVelocity.GetSafeNormal();
 		// Move the barrel!
-		MoveBarrelAndTurret(projectileAimDirection);
+		MoveBarrelAndTurret();
 	}
 }
 
-void UTankAimingComponent::MoveBarrelAndTurret(FVector aimDirection) const {
+void UTankAimingComponent::MoveBarrelAndTurret() const {
 	// Get barrel current rotation
 	FRotator barrelRotation = _barrel->GetForwardVector().Rotation();
 	// Turn the aim direction vector into a rotation
-	FRotator aimDirectionAsRotation = aimDirection.Rotation();
+	FRotator aimDirectionAsRotation = _aimDirection.Rotation();
 	// Get the difference between aim direction rotation and barrel rotation
 	// and this will be how much to rotate the barrel this frame
 	FRotator deltaRotator = aimDirectionAsRotation - barrelRotation;
@@ -122,4 +128,21 @@ void UTankAimingComponent::MoveBarrelAndTurret(FVector aimDirection) const {
 	_barrel->Elevate(deltaRotator.Pitch);
 	// Move turret
 	_turret->RotateAround(deltaRotator.Yaw);
+}
+
+bool UTankAimingComponent::IsBarrelMoving() const {
+	// Get out if there is no barrel
+	if (!ensure(_barrel))
+		return false;
+
+	// Get the current forward vector for the barrel as a unit vector
+	FVector barrelForwardDirectionUnitLength =
+		_barrel->GetForwardVector().GetSafeNormal();
+	// Make the aim direction of unit length
+	FVector aimDirectionUnitLength = _aimDirection.GetSafeNormal();
+	
+	// Compare the two vectors
+	// return true if they aren't equal
+	// return false if they are equal
+	return !barrelForwardDirectionUnitLength.Equals(aimDirectionUnitLength, 0.01f);
 }

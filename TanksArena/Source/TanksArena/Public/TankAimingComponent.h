@@ -55,13 +55,17 @@ public:
 	/** Takes care of aiming at a given position in the world.
 	* @param Vector containing the world location to aim at
 	*/
-	void AimAt(FVector hitWorldLocation) const;
+	void AimAt(FVector hitWorldLocation);
 
 private:
 	/** Calculates barrel rotation and moves it and the turret based on that
-	* @param Suggested direction at which to aim
 	*/
-	void MoveBarrelAndTurret(FVector aimDirection) const;
+	void MoveBarrelAndTurret() const;
+
+	/** Checks if the barrel is currently moving
+	* @return Whether or not the barrel is moving
+	*/
+	bool IsBarrelMoving() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -82,6 +86,8 @@ private:
 
 	UTankBarrel* _barrel = nullptr;								// Reference to the barrel static mesh
 	UTankTurret* _turret = nullptr;								// Reference to the turret static mesh
+
+	FVector _aimDirection = FVector(0.0f);						// Direction in which the tank should be aiming
 
 private:
 	const static FName PROJECTILE_SPAWN_SOCKET;					// name that was given to the socket where the projectiles will spawn from
