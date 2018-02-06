@@ -15,16 +15,14 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	UE_LOG(LogTemp, Warning, TEXT("DEBUG: constructor, C++"));
 }
 
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	UE_LOG(LogTemp, Warning, TEXT("DEBUG: BeginPlay(), C++"));
+
+	_tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 // Called every frame
