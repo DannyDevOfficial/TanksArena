@@ -8,6 +8,13 @@ UTankTrack::UTankTrack() {
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+void UTankTrack::BeginPlay() {
+	Super::BeginPlay();
+
+	// Register delegate for OnHit() events
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+}
+
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -40,4 +47,12 @@ void UTankTrack::SetThrottle(float throttle) const {
 		FVector forceLocation = GetComponentLocation();
 		rootComponent->AddForceAtLocation(forceVectorToApplyToTracks, forceLocation);
 	}
+}
+
+void UTankTrack::OnHit(UPrimitiveComponent* HitComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComponent,
+	FVector NormalImpulse,
+	const FHitResult& Hit) {
+
 }

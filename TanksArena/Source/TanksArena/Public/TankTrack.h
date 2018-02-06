@@ -18,6 +18,10 @@ public:
 	// Sets default values for this component's properties
 	UTankTrack();
 
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
+
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -29,6 +33,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 		void SetThrottle(float throttle) const;
 	
+private:
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComponent,
+			FVector NormalImpulse,
+			const FHitResult& Hit);
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float _maxTrackDrivingForceN = 40000000.0f;	// The max amount of force in Newtons at which the track can move
