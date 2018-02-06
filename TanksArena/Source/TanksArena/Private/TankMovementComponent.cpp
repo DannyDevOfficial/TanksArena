@@ -6,7 +6,7 @@
 
 void UTankMovementComponent::Initialize(UTankTrack* leftTrack, UTankTrack* rightTrack) {
 	// Get out if the references are null
-	if (!leftTrack || !rightTrack)
+	if (!ensure(leftTrack && rightTrack))
 		return;
 
 	// Set the member variables
@@ -16,7 +16,7 @@ void UTankMovementComponent::Initialize(UTankTrack* leftTrack, UTankTrack* right
 
 void UTankMovementComponent::IntendMoveForward(float theThrow) const {
 	// Get out if the references are null
-	if (!_leftTrack || !_rightTrack)
+	if (!ensure(_leftTrack && _rightTrack))
 		return;
 
 	// Set the throttle for the tracks based on
@@ -27,7 +27,7 @@ void UTankMovementComponent::IntendMoveForward(float theThrow) const {
 
 void UTankMovementComponent::IntendTurnRight(float theThrow) const {
 	// Get out if the references are null
-	if (!_leftTrack || !_rightTrack)
+	if (!ensure(_leftTrack && _rightTrack))
 		return;
 
 	// Set the throttle for the tracks based on

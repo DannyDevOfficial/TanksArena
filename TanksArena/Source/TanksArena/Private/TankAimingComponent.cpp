@@ -43,7 +43,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
 	UTankBarrel* tankBarrel) {
 	// Get out if nothing was passed in
-	if (!tankTurret || !tankBarrel)
+	if (!ensure(tankTurret && tankBarrel))
 		return;
 
 	// Set the members
@@ -53,7 +53,7 @@ void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
 
 void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) const {
 	// Get out if there's no barrel
-	if (!_barrel || !_turret)
+	if (!ensure(_barrel && _turret))
 		return;
 
 	// Variables for the launch direction function

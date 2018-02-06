@@ -21,7 +21,7 @@ void ATankAIController::Tick(float DeltaTime) {
 	ATank* playerTarget = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
 	// Get out if there is no controlled tank or player
-	if (!controlledAItank || !playerTarget)
+	if (!ensure(controlledAItank && playerTarget))
 		return;
 
 	// Move ai tank towards player

@@ -42,7 +42,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 void ATank::AimAt(FVector hitPosition) const {
-	if (!_tankAimingComponent)
+	if (!ensure(_tankAimingComponent))
 		return;
 
 	// Delegate aiming to dedicated component
@@ -51,7 +51,7 @@ void ATank::AimAt(FVector hitPosition) const {
 
 void ATank::Fire() {
 	// Get out if there is no barrel
-	if (!_barrel || !_projectile)
+	if (!ensure(_barrel && _projectile))
 		return;
 
 	// Timer for firing projectiles
