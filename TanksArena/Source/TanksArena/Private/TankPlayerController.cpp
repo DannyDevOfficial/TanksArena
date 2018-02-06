@@ -2,7 +2,6 @@
 
 #include "TankPlayerController.h"
 
-#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
@@ -14,14 +13,11 @@ void ATankPlayerController::BeginPlay() {
 
 	// Find aiming component
 	auto aimingComp =
-		GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+		GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
-	if (aimingComp) {
+	if (aimingComp)
 		// Feed it to the event
 		FoundAimingComponent(aimingComp);
-	} else {
-		UE_LOG(LogTemp, Warning, TEXT("Aiming component not found at begin play"));
-	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {
@@ -32,16 +28,13 @@ void ATankPlayerController::Tick(float DeltaTime) {
 	AimAtCrosshair();
 }
 
-
-ATank* ATankPlayerController::GetControlledTank() const {
-	// Cast the pawn component to a tank component since we know
-	// that's what it is
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimAtCrosshair() {
-	// Get out of here if there's no player controller
-	if (!GetControlledTank())
+	// Find aiming component
+	auto aimingComp =
+		GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
+	// Get out of here if there's no aiming component
+	if (!ensure(aimingComp))
 		return;
 
 	// Will store location in the world hit by the
@@ -50,8 +43,7 @@ void ATankPlayerController::AimAtCrosshair() {
 	// If anything was hit
 	if (GetSightRayHitLocation(hitLocation)) {
 		// Aim at location
-		GetControlledTank()->AimAt(hitLocation);
-		// Aim the barrel at that point in the world
+		aimingComp->AimAt(hitLocation);
 	}
 }
 

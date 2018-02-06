@@ -2,7 +2,6 @@
 
 #pragma once
 
-class UTankAimingComponent;
 class UTankBarrel;
 class AProjectile;
 
@@ -31,20 +30,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 public:
-	/** Aim at the location that was passed in
-	* @param Vector used to set the aim
-	*/
-	void AimAt(FVector hitPosition) const;
-
 	/** Fires projectiles when its bound input it triggered
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Input")
-		void Fire();
-
-protected:
-	UPROPERTY(BlueprintReadOnly)
-		UTankAimingComponent* _tankAimingComponent = nullptr;		// Reference to the tank aiming component
-																	// needed to delegate tasks to
+		void Fire();														// needed to delegate tasks to
 
 private:	
 	UTankBarrel* _barrel = nullptr;								// Reference to a barrel static mesh component

@@ -48,9 +48,8 @@ public:
 
 	/** Takes care of aiming at a given position in the world.
 	* @param Vector containing the world location to aim at
-	* @param The speed at which to launch a projectile
 	*/
-	void AimAt(FVector hitWorldLocation, float launchSpeed) const;
+	void AimAt(FVector hitWorldLocation) const;
 
 private:
 	/** Calculates barrel rotation and moves it and the turret based on that
@@ -68,4 +67,8 @@ protected:
 private:
 	UTankBarrel* _barrel = nullptr;								// Reference to the barrel static mesh
 	UTankTurret* _turret = nullptr;								// Reference to the turret static mesh
+
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float _launchSpeed = 4000.0f;
 };

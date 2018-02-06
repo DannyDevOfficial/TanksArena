@@ -2,7 +2,6 @@
 
 #pragma once
 
-class ATank;
 class UTankAimingComponent;
 
 #include "CoreMinimal.h"
@@ -29,13 +28,6 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	/**
-	* Gets the tank that's controlled by the player
-	* @return Tank controlled by the player
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Getter")
-		ATank* GetControlledTank() const;
-
 	/**
 	* Event that fires when an aiming component is found
 	*/

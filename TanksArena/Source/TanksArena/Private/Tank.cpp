@@ -21,8 +21,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-
-	_tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 // Called every frame
@@ -37,14 +35,6 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-}
-
-void ATank::AimAt(FVector hitPosition) const {
-	if (!ensure(_tankAimingComponent))
-		return;
-
-	// Delegate aiming to dedicated component
-	_tankAimingComponent->AimAt(hitPosition, _launchSpeed);
 }
 
 void ATank::Fire() {

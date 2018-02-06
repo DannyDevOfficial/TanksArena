@@ -2,7 +2,7 @@
 
 #include "TankAIController.h"
 
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
@@ -16,21 +16,22 @@ void ATankAIController::Tick(float DeltaTime) {
 	// Call parent implementation
 	Super::Tick(DeltaTime);
 
-	// Get controlled tank and player target
-	ATank* controlledAItank = Cast<ATank>(GetPawn());
-	ATank* playerTarget = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	// Get player target and aiming component
+	APawn* playerTarget = GetWorld()->GetFirstPlayerController()->GetPawn();
+	auto aimingComp =
+		GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
 	// Get out if there is no controlled tank or player
-	if (!ensure(controlledAItank && playerTarget))
+	if (!ensure(playerTarget && aimingComp))
 		return;
 
 	// Move ai tank towards player
 	MoveToActor(playerTarget, _acceptanceRadius);
 
-	// Find the controlled tank and with it
-	// aim at the player location
-	controlledAItank->AimAt(playerTarget->GetTargetLocation());
+	// Aim at the player location
+	aimingComp->AimAt(playerTarget->GetTargetLocation());
 
+	// TODO Refactor Fire() function, put it in the aiming component
 	// Fire a projectile at the player
-	controlledAItank->Fire();
+	//aimingComp->Fire();
 }

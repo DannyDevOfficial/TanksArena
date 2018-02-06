@@ -51,7 +51,7 @@ void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
 	_barrel = tankBarrel;
 }
 
-void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) const {
+void UTankAimingComponent::AimAt(FVector hitWorldLocation) const {
 	// Get out if there's no barrel
 	if (!ensure(_barrel && _turret))
 		return;
@@ -64,7 +64,7 @@ void UTankAimingComponent::AimAt(FVector hitWorldLocation, float launchSpeed) co
 		outLaunchVelocity,
 		startLaunchLocation,
 		hitWorldLocation,
-		launchSpeed,
+		_launchSpeed,
 		false,
 		0.0f,
 		0.0f,
