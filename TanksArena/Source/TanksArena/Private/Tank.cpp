@@ -1,14 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// This code is property of dannydev. All rights reserved.
 
 #include "Tank.h"
-
-#include "TankAimingComponent.h"
-#include "TankBarrel.h"
-#include "Projectile.h"
-
-#include "Engine/World.h"
-#include "Components/SceneComponent.h"
-
 
 // Sets default values
 ATank::ATank()
@@ -35,30 +27,4 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-}
-
-void ATank::Fire() {
-	// Get out if there is no barrel
-	if (!ensure(_barrel && _projectile))
-		return;
-
-	// Timer for firing projectiles
-	if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) > _reloadTimeSecs) {
-		// Spawn a projectile at the barrel's socket location and rotation
-		FVector outProjectileSpawnLocation =
-			_barrel->GetSocketLocation(FName(UTankAimingComponent::PROJECTILE_SPAWN_SOCKET));
-		FRotator outProjectileSpawnRotation =
-			_barrel->GetSocketRotation(FName(UTankAimingComponent::PROJECTILE_SPAWN_SOCKET));
-
-		AProjectile* newProjectile =
-			GetWorld()->SpawnActor<AProjectile>(_projectile,
-				outProjectileSpawnLocation,
-				outProjectileSpawnRotation);
-
-		// Call the launch function from the projectile
-		newProjectile->Launch(_launchSpeed);
-
-		// Update the last time barrel reloaded
-		_lastTimeReloadedSecs = FPlatformTime::Seconds();
-	}
 }

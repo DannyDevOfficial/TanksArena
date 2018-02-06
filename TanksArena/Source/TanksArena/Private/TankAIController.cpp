@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// This code is property of dannydev. All rights reserved.
 
 #include "TankAIController.h"
 
@@ -31,7 +31,6 @@ void ATankAIController::Tick(float DeltaTime) {
 	// Aim at the player location
 	aimingComp->AimAt(playerTarget->GetTargetLocation());
 
-	// TODO Refactor Fire() function, put it in the aiming component
 	// Fire a projectile at the player
-	//aimingComp->Fire();
+	aimingComp->Fire();
 }

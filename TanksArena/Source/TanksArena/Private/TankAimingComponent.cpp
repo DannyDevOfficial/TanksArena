@@ -1,13 +1,16 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// This code is property of dannydev. All rights reserved.
 
 #include "TankAimingComponent.h"
 
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
+#include "Components/SceneComponent.h"
 
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 // Init static member
 const FName UTankAimingComponent::PROJECTILE_SPAWN_SOCKET = "Projectile Spawn";
@@ -18,8 +21,6 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 
@@ -27,8 +28,6 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
 }
 
 
@@ -36,8 +35,6 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
 void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
@@ -49,6 +46,32 @@ void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
 	// Set the members
 	_turret = tankTurret;
 	_barrel = tankBarrel;
+}
+
+void UTankAimingComponent::Fire() {
+	// Get out if there is no barrel
+	if (!ensure(_barrel && _projectile))
+		return;
+
+	// Timer for firing projectiles
+	if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) > _reloadTimeSecs) {
+		// Spawn a projectile at the barrel's socket location and rotation
+		FVector outProjectileSpawnLocation =
+			_barrel->GetSocketLocation(PROJECTILE_SPAWN_SOCKET);
+		FRotator outProjectileSpawnRotation =
+			_barrel->GetSocketRotation(PROJECTILE_SPAWN_SOCKET);
+
+		AProjectile* newProjectile =
+			GetWorld()->SpawnActor<AProjectile>(_projectile,
+				outProjectileSpawnLocation,
+				outProjectileSpawnRotation);
+
+		// Call the launch function from the projectile
+		newProjectile->Launch(_launchSpeed);
+
+		// Update the last time barrel reloaded
+		_lastTimeReloadedSecs = FPlatformTime::Seconds();
+	}
 }
 
 void UTankAimingComponent::AimAt(FVector hitWorldLocation) const {

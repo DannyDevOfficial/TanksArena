@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// This code is property of dannydev. All rights reserved.
 
 #include "TankTrack.h"
 

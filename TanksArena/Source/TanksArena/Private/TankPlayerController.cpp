@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// This code is property of dannydev. All rights reserved.
 
 #include "TankPlayerController.h"
 
@@ -29,6 +29,10 @@ void ATankPlayerController::Tick(float DeltaTime) {
 }
 
 void ATankPlayerController::AimAtCrosshair() {
+	// Get out if no pawn was found
+	if (!ensure(GetPawn()))
+		return;
+
 	// Find aiming component
 	auto aimingComp =
 		GetPawn()->FindComponentByClass<UTankAimingComponent>();
@@ -55,10 +59,8 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) cons
 	// Deproject crosshair screen position to world direction
 	FVector crosshairWorldDirection;
 
-	if (!DeprojectCrosshairScreenPositionToWorld(crosshairScreenLocation,
+	if (DeprojectCrosshairScreenPositionToWorld(crosshairScreenLocation,
 		crosshairWorldDirection)) {
-		UE_LOG(LogTemp, Error, TEXT("Unable to determine crosshair 3D location"));
-	} else {
 		return LineTraceAlongCrosshairDirectionForHit(crosshairWorldDirection,
 			outHitLocation);
 	}

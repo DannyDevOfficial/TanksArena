@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// This code is property of dannydev. All rights reserved.
 
 #pragma once
 
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -46,6 +47,11 @@ public:
 		void Initialize(UTankTurret* tankTurret,
 			UTankBarrel* tankBarrel);
 
+	/** Fires projectiles when its bound input it triggered
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Input")
+		void Fire();
+
 	/** Takes care of aiming at a given position in the world.
 	* @param Vector containing the world location to aim at
 	*/
@@ -57,18 +63,26 @@ private:
 	*/
 	void MoveBarrelAndTurret(FVector aimDirection) const;
 
-public:
-	const static FName PROJECTILE_SPAWN_SOCKET;					// name that was given to the socket where the projectiles will spawn from
-
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState _firingState = EFiringState::Reloading;	// current state the tank is in
 
 private:
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		TSubclassOf<AProjectile> _projectile = nullptr;			// Reference to a projectile that will be spawned
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float _launchSpeed = 4000.0f;							// Speed at which to launch the projectiles
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		double _reloadTimeSecs = 3.0f;							// Time it takes for the barrel to reload and be able
+																// to shoot again
+
+	double _lastTimeReloadedSecs = 0.0f;						// Last time barrel reloaded
+
 	UTankBarrel* _barrel = nullptr;								// Reference to the barrel static mesh
 	UTankTurret* _turret = nullptr;								// Reference to the turret static mesh
 
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float _launchSpeed = 4000.0f;
+private:
+	const static FName PROJECTILE_SPAWN_SOCKET;					// name that was given to the socket where the projectiles will spawn from
 };
