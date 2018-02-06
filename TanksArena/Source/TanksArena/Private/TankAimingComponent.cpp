@@ -28,6 +28,9 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Make it as if tanks fired a shot so they don't shoot as soon as the game starts
+	_lastTimeReloadedSecs = FPlatformTime::Seconds();
 }
 
 
@@ -35,6 +38,10 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// Set the current state to reloading if the timer is still running
+	if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) > _reloadTimeSecs)
+		_firingState = EFiringState::Reloading;
 }
 
 void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
@@ -53,8 +60,8 @@ void UTankAimingComponent::Fire() {
 	if (!ensure(_barrel && _projectile))
 		return;
 
-	// Timer for firing projectiles
-	if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) > _reloadTimeSecs) {
+	// Only fire if tank's not reloading
+	if (_firingState != EFiringState::Reloading) {
 		// Spawn a projectile at the barrel's socket location and rotation
 		FVector outProjectileSpawnLocation =
 			_barrel->GetSocketLocation(PROJECTILE_SPAWN_SOCKET);
