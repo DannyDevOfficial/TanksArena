@@ -124,10 +124,11 @@ void UTankAimingComponent::MoveBarrelAndTurret() const {
 	// and this will be how much to rotate the barrel this frame
 	FRotator deltaRotator = aimDirectionAsRotation - barrelRotation;
 
+	// Used normalized rotators to always go the right way
 	// Move barrel
-	_barrel->Elevate(deltaRotator.Pitch);
+	_barrel->Elevate(deltaRotator.GetNormalized().Pitch);
 	// Move turret
-	_turret->RotateAround(deltaRotator.Yaw);
+	_turret->RotateAround(deltaRotator.GetNormalized().Yaw);
 }
 
 bool UTankAimingComponent::IsBarrelMoving() const {

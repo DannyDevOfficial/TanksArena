@@ -81,7 +81,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		double _reloadTimeSecs = 3.0f;							// Time it takes for the barrel to reload and be able
 																// to shoot again
-
 	double _lastTimeReloadedSecs = 0.0f;						// Last time barrel reloaded
 
 	UTankBarrel* _barrel = nullptr;								// Reference to the barrel static mesh
