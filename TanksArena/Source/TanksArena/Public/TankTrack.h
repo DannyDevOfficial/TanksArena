@@ -31,7 +31,7 @@ public:
 	* @param throttle value to set
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Input")
-		void SetThrottle(float throttle) const;
+		void SetThrottle(float throttle);
 	
 private:
 	UFUNCTION()
@@ -41,8 +41,18 @@ private:
 			FVector NormalImpulse,
 			const FHitResult& Hit);
 
+	/** Apply a force opposite to the tank's sideways force
+	*/
+	void ApplySidewaysForce();
+
+	/** Apply a force to the tracks to make tank move forward
+	*/
+	void DriveTrack() const;
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float _maxTrackDrivingForceN = 40000000.0f;	// The max amount of force in Newtons at which the track can move
+
+	float _currentThrottle = 0.0f;					// The throttle value used currently
 
 };
