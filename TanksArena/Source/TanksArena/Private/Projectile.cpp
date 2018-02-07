@@ -28,6 +28,9 @@ AProjectile::AProjectile()
 	SetRootComponent(_collisionMesh);
 	_collisionMesh->SetNotifyRigidBodyCollision(true);
 	_collisionMesh->SetVisibility(false);
+
+	// Attach particle system to root component
+	_launchBlast->AttachTo(RootComponent);
 }
 
 // Called when the game starts or when spawned
