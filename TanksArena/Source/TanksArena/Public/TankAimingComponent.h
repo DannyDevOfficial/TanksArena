@@ -39,6 +39,11 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:
+	/* Expose the current firing state publicly
+	* @return current firing state
+	*/
+	EFiringState GetFiringState() const;
+
 	/** Initializes the aiming component
 	* @param tank turret to set
 	* @param tank barrel to set

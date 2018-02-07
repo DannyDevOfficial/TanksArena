@@ -27,5 +27,5 @@ protected:
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float _acceptanceRadius = 3000.0f;	// How far does the AI tank have to be before it stops moving
+		float _acceptanceRadius = 80000.0f;	// How far does the AI tank have to be before it stops moving
 };

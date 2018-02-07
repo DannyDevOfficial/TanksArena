@@ -50,6 +50,10 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 		_firingState = EFiringState::Locked;
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const {
+	return _firingState;
+}
+
 void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
 	UTankBarrel* tankBarrel) {
 	// Get out if nothing was passed in

@@ -32,5 +32,7 @@ void ATankAIController::Tick(float DeltaTime) {
 	aimingComp->AimAt(playerTarget->GetTargetLocation());
 
 	// Fire a projectile at the player
-	aimingComp->Fire();
+	// only if aim is locked
+	if (aimingComp->GetFiringState() == EFiringState::Locked)
+		aimingComp->Fire();
 }
