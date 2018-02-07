@@ -92,6 +92,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		double _reloadTimeSecs = 3.0f;							// Time it takes for the barrel to reload and be able
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		uint32 _ammoLeft = 3;									// How many ammos are left
 																// to shoot again
 	double _lastTimeReloadedSecs = 0.0f;						// Last time barrel reloaded
 
@@ -99,7 +102,6 @@ private:
 	UTankTurret* _turret = nullptr;								// Reference to the turret static mesh
 
 	FVector _aimDirection = FVector(0.0f);						// Direction in which the tank should be aiming
-	int _ammoLeft = 3;											// How many ammos are left
 
 private:
 	const static FName PROJECTILE_SPAWN_SOCKET;					// name that was given to the socket where the projectiles will spawn from

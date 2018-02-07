@@ -3,6 +3,8 @@
 #pragma once
 
 class UProjectileMovementComponent;
+class UParticleSystemComponent;
+class UStaticMeshComponent;
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -34,4 +36,11 @@ public:
 	
 private:
 	UProjectileMovementComponent* _projectileMovComp = nullptr;	// reference to a projectile movement component
+
+	UPROPERTY(VisibleAnywhere, Category = "Projectile Component")
+		UStaticMeshComponent* _collisionMesh = nullptr;				// reference to a static mesh component used for collisions
+
+	UPROPERTY(VisibleAnywhere, Category = "Projectile Component")
+		UParticleSystemComponent* _launchBlast = nullptr;			// reference to a particle system component used for the shot blast
+
 };
