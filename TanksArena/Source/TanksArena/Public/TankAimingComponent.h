@@ -17,7 +17,8 @@ UENUM()
 enum class EFiringState : uint8 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 
@@ -39,10 +40,16 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:
-	/* Expose the current firing state publicly
+	/* Exposes the current firing state publicly
 	* @return current firing state
 	*/
 	EFiringState GetFiringState() const;
+
+	/* Gets the number of ammos left
+	* @return left ammos
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+		int GetAmmoLeft() const;
 
 	/** Initializes the aiming component
 	* @param tank turret to set
@@ -92,6 +99,7 @@ private:
 	UTankTurret* _turret = nullptr;								// Reference to the turret static mesh
 
 	FVector _aimDirection = FVector(0.0f);						// Direction in which the tank should be aiming
+	int _ammoLeft = 3;											// How many ammos are left
 
 private:
 	const static FName PROJECTILE_SPAWN_SOCKET;					// name that was given to the socket where the projectiles will spawn from

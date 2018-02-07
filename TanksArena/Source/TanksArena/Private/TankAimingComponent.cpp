@@ -39,8 +39,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// Set the current state to reloading if the timer is still running
-	if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) < _reloadTimeSecs)
+	if (_ammoLeft <= 0)
+		// Set state to out of ammo if there are no ammo left
+		_firingState = EFiringState::OutOfAmmo;
+	else if ((FPlatformTime::Seconds() - _lastTimeReloadedSecs) < _reloadTimeSecs)
+		// Set the current state to reloading if the timer is still running
 		_firingState = EFiringState::Reloading;
 	else if (IsBarrelMoving())
 		// Tank's aiming if barrel is moving
@@ -52,6 +55,10 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 EFiringState UTankAimingComponent::GetFiringState() const {
 	return _firingState;
+}
+
+int UTankAimingComponent::GetAmmoLeft() const {
+	return _ammoLeft;
 }
 
 void UTankAimingComponent::Initialize(UTankTurret* tankTurret,
@@ -71,7 +78,8 @@ void UTankAimingComponent::Fire() {
 		return;
 
 	// Only fire if tank's not reloading
-	if (_firingState != EFiringState::Reloading) {
+	if ((_firingState == EFiringState::Locked) ||
+		(_firingState == EFiringState::Aiming)) {
 		// Spawn a projectile at the barrel's socket location and rotation
 		FVector outProjectileSpawnLocation =
 			_barrel->GetSocketLocation(PROJECTILE_SPAWN_SOCKET);
@@ -88,6 +96,9 @@ void UTankAimingComponent::Fire() {
 
 		// Update the last time barrel reloaded
 		_lastTimeReloadedSecs = FPlatformTime::Seconds();
+
+		// Decrease the ammo left
+		_ammoLeft--;
 	}
 }
 
