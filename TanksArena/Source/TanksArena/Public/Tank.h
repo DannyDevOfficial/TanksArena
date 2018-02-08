@@ -25,6 +25,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+public:
+	/* Get the health mapped to 0 to 1
+	* @return the current health in percentage
+	*/
+	UFUNCTION(BlueprintPure, Category = "Health")
+		float GetHealthPercentage() const;
+
 protected:
 	virtual float TakeDamage(float DamageAmount,
 		struct FDamageEvent const & DamageEvent,

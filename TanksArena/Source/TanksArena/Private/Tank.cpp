@@ -29,6 +29,10 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+float ATank::GetHealthPercentage() const {
+	return float(_currentHealth) / float(_startingHealth);
+}
+
 float ATank::TakeDamage(float DamageAmount,
 	struct FDamageEvent const & DamageEvent,
 	class AController* EventInstigator,
