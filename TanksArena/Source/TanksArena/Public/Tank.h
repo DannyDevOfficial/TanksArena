@@ -24,4 +24,17 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+	virtual float TakeDamage(float DamageAmount,
+		struct FDamageEvent const & DamageEvent,
+		class AController* EventInstigator,
+		AActor* DamageCauser) override;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		int32 _startingHealth = 100;		// How much health the tank starts with
+
+private:
+	int32 _currentHealth = _startingHealth;	// Amount of health this tank has left
 };

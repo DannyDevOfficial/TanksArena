@@ -64,4 +64,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float _destructionTimerSecs = 0.5f;							// How long before the projectile gets destroyed
 
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+		float _damageAmount = 20.0f;								// How much damage does a projectile do
+
 };

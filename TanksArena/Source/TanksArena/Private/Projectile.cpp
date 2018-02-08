@@ -9,6 +9,8 @@
 #include "Engine/EngineTypes.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
 
 
 // Sets default values
@@ -81,6 +83,14 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent,
 
 	// Add explosion force
 	_explosionForce->FireImpulse();
+
+	// Apply damage
+	UGameplayStatics::ApplyRadialDamage(this,
+		_damageAmount,
+		GetActorLocation(),
+		_explosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>());
 
 	// Timer for projectile destruction
 	FTimerHandle outTimerHandle;

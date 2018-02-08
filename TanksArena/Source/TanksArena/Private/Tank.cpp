@@ -28,3 +28,26 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+
+float ATank::TakeDamage(float DamageAmount,
+	struct FDamageEvent const & DamageEvent,
+	class AController* EventInstigator,
+	AActor* DamageCauser) {
+	// Round the damage amount to the nearest integer
+	int32 integralDamageAmount = FMath::RoundToInt(DamageAmount);
+
+	// Clamp the damage amount taken
+	// between the current health and min health
+	float actualDamageToApply =
+		FMath::Clamp(integralDamageAmount, int32(0), _currentHealth);
+
+	// Decrease current health
+	_currentHealth -= actualDamageToApply;
+
+	// No heatlh left
+	if (_currentHealth <= 0)
+		// Handle tank's death
+		UE_LOG(LogTemp, Warning, TEXT("%s is dead"), *GetName());
+
+	return actualDamageToApply;
+}
