@@ -42,6 +42,10 @@ private:
 			FVector NormalImpulse,
 			const FHitResult& Hit);
 
+	/* Do this when a projectile hits something
+	*/
+	void ProjectileHitSomething();
+
 private:
 	UProjectileMovementComponent* _projectileMovComp = nullptr;	// reference to a projectile movement component
 
@@ -56,5 +60,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Projectile Component")
 		URadialForceComponent* _explosionForce = nullptr;			// reference to a radial force used to simulate explosion force
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float _destructionTimerSecs = 0.5f;							// How long before the projectile gets destroyed
 
 };

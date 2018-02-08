@@ -6,6 +6,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Engine/EngineTypes.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
 
 
 // Sets default values
@@ -78,4 +81,16 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent,
 
 	// Add explosion force
 	_explosionForce->FireImpulse();
+
+	// Timer for projectile destruction
+	FTimerHandle outTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(outTimerHandle,
+		this,
+		&AProjectile::ProjectileHitSomething,
+		_destructionTimerSecs);
+}
+
+void AProjectile::ProjectileHitSomething() {
+	// Destroy the projectile
+	this->Destroy();
 }
