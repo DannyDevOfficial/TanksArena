@@ -20,17 +20,23 @@ AProjectile::AProjectile()
 	_projectileMovComp->bAutoActivate = false;
 
 	// Add a static mesh component for collisions
-	// and a particle system component
+	// and particle system components
 	_collisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
 	_launchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
+	_impactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
 
 	// Set default root component and some properties
 	SetRootComponent(_collisionMesh);
 	_collisionMesh->SetNotifyRigidBodyCollision(true);
 	_collisionMesh->SetVisibility(false);
 
-	// Attach particle system to root component
-	_launchBlast->AttachTo(RootComponent);
+	// Attach particle systems to root component
+	_launchBlast->AttachToComponent(RootComponent,
+		FAttachmentTransformRules::KeepRelativeTransform);
+	_impactBlast->AttachToComponent(RootComponent,
+		FAttachmentTransformRules::KeepRelativeTransform);
+	// Don't activate automatically
+	_impactBlast->bAutoActivate = false;
 }
 
 // Called when the game starts or when spawned
@@ -38,6 +44,8 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Register delegate for OnHit() events
+	_collisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
 // Called every frame
@@ -53,4 +61,15 @@ void AProjectile::Launch(float speed) const {
 
 	// Activate the projectile movement component
 	_projectileMovComp->Activate();
+}
+
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComponent,
+	FVector NormalImpulse,
+	const FHitResult& Hit) {
+	// Deactivate the launch blast
+	_launchBlast->Deactivate();
+	// Activate the impact blast
+	_impactBlast->Activate();
 }

@@ -33,7 +33,14 @@ public:
 	*/
 	void Launch(float speed) const;
 
-	
+private:
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComponent,
+			FVector NormalImpulse,
+			const FHitResult& Hit);
+
 private:
 	UProjectileMovementComponent* _projectileMovComp = nullptr;	// reference to a projectile movement component
 
@@ -42,5 +49,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Projectile Component")
 		UParticleSystemComponent* _launchBlast = nullptr;			// reference to a particle system component used for the shot blast
+
+	UPROPERTY(VisibleAnywhere, Category = "Projectile Component")
+		UParticleSystemComponent* _impactBlast = nullptr;			// reference to a particle system component used for the impact blast
 
 };
