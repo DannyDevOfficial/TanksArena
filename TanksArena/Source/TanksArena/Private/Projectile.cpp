@@ -5,6 +5,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 
 
 // Sets default values
@@ -19,24 +20,26 @@ AProjectile::AProjectile()
 
 	_projectileMovComp->bAutoActivate = false;
 
-	// Add a static mesh component for collisions
-	// and particle system components
+	// Add components
 	_collisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
 	_launchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	_impactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
+	_explosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
 
 	// Set default root component and some properties
 	SetRootComponent(_collisionMesh);
 	_collisionMesh->SetNotifyRigidBodyCollision(true);
 	_collisionMesh->SetVisibility(false);
 
-	// Attach particle systems to root component
+	// Attach components to root component
 	_launchBlast->AttachToComponent(RootComponent,
 		FAttachmentTransformRules::KeepRelativeTransform);
 	_impactBlast->AttachToComponent(RootComponent,
 		FAttachmentTransformRules::KeepRelativeTransform);
 	// Don't activate automatically
 	_impactBlast->bAutoActivate = false;
+	_explosionForce->AttachToComponent(RootComponent,
+		FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 // Called when the game starts or when spawned
@@ -72,4 +75,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent,
 	_launchBlast->Deactivate();
 	// Activate the impact blast
 	_impactBlast->Activate();
+
+	// Add explosion force
+	_explosionForce->FireImpulse();
 }

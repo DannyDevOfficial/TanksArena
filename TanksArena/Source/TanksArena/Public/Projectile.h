@@ -5,6 +5,7 @@
 class UProjectileMovementComponent;
 class UParticleSystemComponent;
 class UStaticMeshComponent;
+class URadialForceComponent;
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -52,5 +53,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Projectile Component")
 		UParticleSystemComponent* _impactBlast = nullptr;			// reference to a particle system component used for the impact blast
+
+	UPROPERTY(VisibleAnywhere, Category = "Projectile Component")
+		URadialForceComponent* _explosionForce = nullptr;			// reference to a radial force used to simulate explosion force
 
 };
