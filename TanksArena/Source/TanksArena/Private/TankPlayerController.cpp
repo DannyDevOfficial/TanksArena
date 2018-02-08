@@ -124,7 +124,7 @@ bool ATankPlayerController::LineTraceAlongCrosshairDirectionForHit(FVector cross
 	bool objectHit = GetWorld()->LineTraceSingleByChannel(hitResult,
 		startLocation,
 		endLocation,
-		ECollisionChannel::ECC_Visibility);
+		ECollisionChannel::ECC_Camera);
 
 	outHitPosition = (objectHit == true) ? hitResult.Location : FVector(0.0f);
 
