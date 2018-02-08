@@ -132,5 +132,6 @@ bool ATankPlayerController::LineTraceAlongCrosshairDirectionForHit(FVector cross
 }
 
 void ATankPlayerController::OnTankDeath() {
-	UE_LOG(LogTemp, Warning, TEXT("%s died"), *GetName());
+	// Become a spectator cause you're dead!
+	StartSpectatingOnly();
 }

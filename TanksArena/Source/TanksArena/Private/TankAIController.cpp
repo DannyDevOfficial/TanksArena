@@ -58,5 +58,10 @@ void ATankAIController::Tick(float DeltaTime) {
 }
 
 void ATankAIController::OnTankDeath() {
-	UE_LOG(LogTemp, Warning, TEXT("%s died"), *GetName());
+	// Get out if there's no pawn
+	if (!GetPawn())
+		return;
+
+	// Stop controlling tanks when you're dead!
+	GetPawn()->DetachFromControllerPendingDestroy();
 }

@@ -13,6 +13,10 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Set the current health at begin play
+	// so blueprint changes come through
+	_currentHealth = _startingHealth;
 }
 
 // Called every frame
