@@ -51,7 +51,7 @@ float ATank::TakeDamage(float DamageAmount,
 	// No heatlh left
 	if (_currentHealth <= 0)
 		// Handle tank's death
-		UE_LOG(LogTemp, Warning, TEXT("%s is dead"), *GetName());
+		OnDeath.Broadcast();
 
 	return actualDamageToApply;
 }

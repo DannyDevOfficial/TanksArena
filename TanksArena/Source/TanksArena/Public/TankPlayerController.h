@@ -22,6 +22,11 @@ protected:
 	*/
 	virtual void BeginPlay() override;
 
+	/* Called the moment the pawn is set
+	* @param Pawn to set
+	*/
+	virtual void SetPawn(APawn* InPawn) override;
+
 	/**
 	* Runs once every frame
 	*/
@@ -68,6 +73,11 @@ private:
 	*/
 	bool LineTraceAlongCrosshairDirectionForHit(FVector crosshairWorldDir,
 		FVector& outHitPosition) const;
+
+	/* Delegate function, will listen for death event
+	*/
+	UFUNCTION()
+		void OnTankDeath();
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")

@@ -2,6 +2,8 @@
 
 #include "TankPlayerController.h"
 
+#include "Tank.h"
+
 #include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
@@ -18,6 +20,24 @@ void ATankPlayerController::BeginPlay() {
 	if (aimingComp)
 		// Feed it to the event
 		FoundAimingComponent(aimingComp);
+}
+
+void ATankPlayerController::SetPawn(APawn* InPawn) {
+	// Very important to let the parent set the pawn
+	Super::SetPawn(InPawn);
+
+	// Make sure there is a pawn set
+	if (InPawn) {
+		// Cast the pawn to a Tank
+		ATank* possessedTank = Cast<ATank>(InPawn);
+		// Get out if there is no possessed tank
+		if (!ensure(possessedTank))
+			return;
+
+		// Register for the OnDeath event
+		possessedTank->OnDeath.AddUniqueDynamic(this,
+			&ATankPlayerController::OnTankDeath);
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {
@@ -109,4 +129,8 @@ bool ATankPlayerController::LineTraceAlongCrosshairDirectionForHit(FVector cross
 	outHitPosition = (objectHit == true) ? hitResult.Location : FVector(0.0f);
 
 	return objectHit;
+}
+
+void ATankPlayerController::OnTankDeath() {
+	UE_LOG(LogTemp, Warning, TEXT("%s died"), *GetName());
 }

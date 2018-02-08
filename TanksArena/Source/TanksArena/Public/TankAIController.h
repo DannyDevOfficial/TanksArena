@@ -20,10 +20,21 @@ protected:
 	*/
 	virtual void BeginPlay() override;
 
+	/* Called the moment the pawn is set
+	* @param Pawn to set
+	*/
+	virtual void SetPawn(APawn* InPawn) override;
+
 	/** Called every frame
 	* @param Time it took the last frame to complete
 	*/
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	/* Delegate function, will listen for death event
+	*/
+	UFUNCTION()
+		void OnTankDeath();
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")

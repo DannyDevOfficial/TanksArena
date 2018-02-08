@@ -2,6 +2,8 @@
 
 #include "TankAIController.h"
 
+#include "Tank.h"
+
 #include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/World.h"
@@ -10,6 +12,24 @@
 void ATankAIController::BeginPlay() {
 	// Call parent implementation
 	Super::BeginPlay();
+}
+
+void ATankAIController::SetPawn(APawn* InPawn) {
+	// Very important to let the parent set the pawn
+	Super::SetPawn(InPawn);
+
+	// Make sure there is a pawn set
+	if (InPawn) {
+		// Cast the pawn to a Tank
+		ATank* possessedTank = Cast<ATank>(InPawn);
+		// Get out if there is no possessed tank
+		if (!ensure(possessedTank))
+			return;
+
+		// Register for the OnDeath event
+		possessedTank->OnDeath.AddUniqueDynamic(this,
+			&ATankAIController::OnTankDeath);
+	}
 }
 
 void ATankAIController::Tick(float DeltaTime) {
@@ -35,4 +55,8 @@ void ATankAIController::Tick(float DeltaTime) {
 	// only if aim is locked
 	if (aimingComp->GetFiringState() == EFiringState::Locked)
 		aimingComp->Fire();
+}
+
+void ATankAIController::OnTankDeath() {
+	UE_LOG(LogTemp, Warning, TEXT("%s died"), *GetName());
 }

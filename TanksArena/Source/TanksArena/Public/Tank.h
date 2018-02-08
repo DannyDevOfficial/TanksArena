@@ -5,6 +5,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class TANKSARENA_API ATank : public APawn
 {
@@ -37,6 +39,9 @@ protected:
 		struct FDamageEvent const & DamageEvent,
 		class AController* EventInstigator,
 		AActor* DamageCauser) override;
+
+public:
+	FTankDelegate OnDeath;					// Instance of the delegate
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
